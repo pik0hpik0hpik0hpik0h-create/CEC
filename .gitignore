@@ -1,0 +1,35 @@
+# Entorno virtual
+venv/
+ENV/
+env/
+
+# Base de datos local
+db.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Archivos temporales
+*.log
+*.pot
+*.swp
+*.DS_Store
+
+# Django
+/media/
+staticfiles/
+static_root/
+
+# IDE
+.vscode/
+.idea/
+
+# Variables de entorno
+.env
+*.env
+
+# Node/Tailwind (cuando lo instales)
+node_modules/
