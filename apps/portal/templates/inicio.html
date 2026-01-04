@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="cec-claro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Excurcionista Capdevielle</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+
+<body class="bg-base-100">
+
+    <h1 class="font-black text-base">HOLA</h1>
+    <h1 class="font-black text-primary">HOLA</h1>
+    <h1 class="font-black text-primary-content">HOLA</h1>
+    <h1 class="font-black text-warning">HOLA</h1>
+
+    <select class="select select-bordered mt-4" data-choose-theme>
+        <option value="cec-claro">Claro</option>
+        <option value="cec-oscuro">Oscuro</option>
+    </select>
+
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+    <script>
+        themeChange();
+    </script>
+
+</body>
+
+</html>
