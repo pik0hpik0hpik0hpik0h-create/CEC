@@ -28,6 +28,8 @@
   --color-error: oklch(68.09% 0.2089 32.43);
   --color-error-content: oklch(46.27% 0.1859 20.42);
 
+  --color-extra-1: oklch(27.15% 0.129 273.16);
+
   /* border radius */
   --radius-selector: 1rem;
   --radius-field: 0.25rem;
@@ -72,6 +74,7 @@
   --color-error: oklch(68.09% 0.2089 32.43);
   --color-error-content: oklch(46.27% 0.1859 20.42);
 
+  --color-extra-1: oklch(27.15% 0.129 273.16);
 
   /* border radius */
   --radius-selector: 1rem;
