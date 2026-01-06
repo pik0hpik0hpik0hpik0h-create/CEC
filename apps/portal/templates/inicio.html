@@ -60,6 +60,7 @@
             <ul class="menu menu-horizontal px-1 space-x-3 hidden md:flex">
                 <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Inicio</a></li>
                 <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Áreas</a></li>
+                <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Efeméride</a></li>
                 <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Decálogo</a></li>
                 <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Contacto</a></li>
             </ul>
@@ -78,6 +79,7 @@
                     class="menu menu-compact dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-40">
                     <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Inicio</a></li>
                     <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Áreas</a></li>
+                    <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Efeméride</a></li>
                     <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Decálogo</a></li>
                     <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Contacto</a></li>
                 </ul>
@@ -137,7 +139,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-purple-500/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-purple-500/30">
                 <img src="{% static 'img/INICIADOS.png' %}" alt="Iniciados 2k25" class="rounded-xl"/>
             </figure>
         
@@ -153,7 +155,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-red-500/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-red-500/30">
                 <img src="{% static 'img/ROJA.png' %}" alt="Roja 2k25" class="rounded-xl"/>
             </figure>
         
@@ -169,7 +171,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-amber-500/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-amber-500/30">
                 <img src="{% static 'img/AMARILLA.png' %}" alt="Amarilla 2k25" class="rounded-xl"/>
             </figure>
         
@@ -185,7 +187,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-white/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-white/30">
                 <img src="{% static 'img/UNIVERSITARIA.png' %}" alt="Universitaria 2k25" class="rounded-xl"/>
             </figure>
         
@@ -201,7 +203,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-sky-500/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-sky-500/30">
                 <img src="{% static 'img/GUIAS.png' %}" alt="Guías 2k25" class="rounded-xl"/>
             </figure>
         
@@ -217,7 +219,7 @@
 
         <div class="hover-3d">
         
-            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-emerald-500/30">
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-3 bg-emerald-500/30">
                 <img src="{% static 'img/DIRECTIVA.png' %}" alt="Directiva 2k25" class="rounded-xl"/>
             </figure>
         
@@ -233,45 +235,180 @@
 
     </div>
 
-    <!-- DECÁLOGO -->
-    <div class="carousel">
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp"
-            alt="Burger" />
+    <div class="flex flex-col xl:flex-row justify-between items-center m-6.5 sm:m-10 gap-10 mb-8">
+
+        
+        
+        <!--EFEMÉRIDE-->
+        <div class="flex flex-col items-center justify-center w-full sm:w-auto"> 
+
+            <div class="flex justify-center items-center mb-8">
+                <h2 class="font-dm-serif italic text-4xl">
+                    EFEMÉRIDE
+                </h2>
+            </div>
+
+            <div class="w-80 sm:w-95 md:w-200 max-h-80 overflow-y-auto shadow-lg rounded-lg">
+        
+                <ul class="list bg-base-100 rounded-box shadow-md">
+                    
+                    <li class="list-row">
+                        <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/></div>
+                        <div>
+                            <div class="font-montserrat font-bold uppercase">Campamento Semestral Navideño</div>
+                            <div class="font-montserrat text-xs font-light opacity-60">12, 13 y 14 de diciembre</div>
+                            <div class="font-montserrat text-xs font-semiblod mt-5">Autor: Luis Pico</div>
+                        </div>
+                        <p class="list-col-wrap text-xs text-justify font-montserrat italic">
+                        El Campamento Semestral Navideño se convierte cada año en un espacio de encuentro, amistad y crecimiento. Entre risas, juegos, dinámicas y momentos de reflexión, los participantes fortalecen valores como la solidaridad, el compañerismo y la fe. Más que una actividad, es una experiencia que marca el corazón y nos invita a vivir la Navidad con alegría, servicio y espíritu comunitario.
+                        </p>
+                    </li>
+                    
+                    <li class="list-row">
+                        <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/></div>
+                        <div>
+                            <div class="font-montserrat font-bold uppercase">Campamento Semestral Navideño</div>
+                            <div class="font-montserrat text-xs font-light opacity-60">12, 13 y 14 de diciembre</div>
+                            <div class="font-montserrat text-xs font-semiblod mt-5">Autor: Luis Pico</div>
+                        </div>
+                        <p class="list-col-wrap text-xs text-justify font-montserrat italic">
+                        El Campamento Semestral Navideño se convierte cada año en un espacio de encuentro, amistad y crecimiento. Entre risas, juegos, dinámicas y momentos de reflexión, los participantes fortalecen valores como la solidaridad, el compañerismo y la fe. Más que una actividad, es una experiencia que marca el corazón y nos invita a vivir la Navidad con alegría, servicio y espíritu comunitario.
+                        </p>
+                    </li>
+
+                    <li class="list-row">
+                        <div><img class="size-10 rounded-box" src="https://img.daisyui.com/images/profile/demo/1@94.webp"/></div>
+                        <div>
+                            <div class="font-montserrat font-bold uppercase">Campamento Semestral Navideño</div>
+                            <div class="font-montserrat text-xs font-light opacity-60">12, 13 y 14 de diciembre</div>
+                            <div class="font-montserrat text-xs font-semiblod mt-5">Autor: Luis Pico</div>
+                        </div>
+                        <p class="list-col-wrap text-xs text-justify font-montserrat italic">
+                        El Campamento Semestral Navideño se convierte cada año en un espacio de encuentro, amistad y crecimiento. Entre risas, juegos, dinámicas y momentos de reflexión, los participantes fortalecen valores como la solidaridad, el compañerismo y la fe. Más que una actividad, es una experiencia que marca el corazón y nos invita a vivir la Navidad con alegría, servicio y espíritu comunitario.
+                        </p>
+                    </li>
+                    
+                    </ul>
+                
+            </div>
+
         </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.webp"
-            alt="Burger" />
-        </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.webp"
-            alt="Burger" />
-        </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.webp"
-            alt="Burger" />
-        </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.webp"
-            alt="Burger" />
-        </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.webp"
-            alt="Burger" />
-        </div>
-        <div class="carousel-item">
-            <img
-            src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.webp"
-            alt="Burger" />
+
+        <!--DECÁLOGO-->
+        <div class="flex flex-col items-center justify-center w-full sm:w-auto">
+
+            <div class="flex justify-center items-center mb-8">
+                <h2 class="font-dm-serif italic text-4xl">
+                    NUESTRA LEY
+                </h2>
+            </div>
+
+            <div class="carousel carousel-vertical rounded-box h-80 space-y-5">
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            1. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es digno de confianza
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            2. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es leal
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            3. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> está dispuesto a conocer la sociedad en que vive y a combatir la injusticia
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            4. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es estudioso, responsable y alegre
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            5. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> contempla la naturaleza, la respeta y la transforma en favor de los hombres. Ve en ella la obra de Dios
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            6. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es disciplinado y se compromete hasta el final
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            7. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es dueño de sí mismo y afronta con optimismo las dificultades
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            8. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es amigo y hermano de cualquier otro
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            9. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong> es trabajador y austero
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="carousel-item">
+
+                    <div class="w-80 sm:w-95 rounded-lg bg-base-200 p-5 text-center shadow-lg">
+                        <p class="mt-2 font-montserrat font-light">
+                            10. El <strong class="font-dm-serif italic text-secondary">CECISTA</strong>  es sano en pensamiento, palabra y obra
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     </div>
-
 
 </body>
 
