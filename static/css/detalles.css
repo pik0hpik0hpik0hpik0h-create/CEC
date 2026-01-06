@@ -1,0 +1,4 @@
+/* Tema oscuro para logo del CEC en el header */
+[data-theme="cec-oscuro"] #logo_cec_header {
+    filter: invert(0.9);
+}

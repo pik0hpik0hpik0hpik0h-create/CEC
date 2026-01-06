@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
 </head>
 
-<body class="min-h-screen bg-base-200">
-
+<body class="min-h-screen bg-base-300">
+    
+    <!-- CAMBIO DE TEMA -->
     <div class="h-10 flex justify-end items-center" style="background-color: var(--color-extra-1);">
 
         <label class="swap swap-rotate text-accent cursor-pointer">
@@ -46,28 +47,21 @@
 
         </label>
     </div>
-
-    <div class="bg-accent h-1"></div>
-
-    <div class="navbar h-20 bg-base-100 shadow-sm sticky top-0 z-50">
+    
+    <div class="bg-accent h-1 sticky top-0 z-100"></div>
+    
+    <!-- NAVBAR -->
+    <div class="navbar h-25 bg-base-100 shadow-sm sticky top-0 z-50">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl">daisyUI</a>
+            <img src="{% static 'img/logo_header.png' %}" id="logo_cec_header"alt="Logo del CEC" class="ml-2.5 h-15 brightness-0">
         </div>
 
         <div class="flex-none">
             <ul class="menu menu-horizontal px-1 space-x-3 hidden md:flex">
-                <li><a href="#"
-                        class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Inicio</a>
-                </li>
-                <li><a href="#"
-                        class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Áreas</a>
-                </li>
-                <li><a href="#"
-                        class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Decálogo</a>
-                </li>
-                <li><a href="#"
-                        class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Contacto</a>
-                </li>
+                <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Inicio</a></li>
+                <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Áreas</a></li>
+                <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Decálogo</a></li>
+                <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Contacto</a></li>
             </ul>
 
             <div class="dropdown dropdown-end md:hidden">
@@ -82,23 +76,202 @@
 
                 <ul tabindex="0"
                     class="menu menu-compact dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-40">
-                    <li><a href="#"
-                            class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Inicio</a>
-                    </li>
-                    <li><a href="#"
-                            class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Áreas</a>
-                    </li>
-                    <li><a href="#"
-                            class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Decálogo</a>
-                    </li>
-                    <li><a href="#"
-                            class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary">Contacto</a>
-                    </li>
+                    <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Inicio</a></li>
+                    <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Áreas</a></li>
+                    <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Decálogo</a></li>
+                    <li><a href="#" class="hover:bg-neutral/5 active:bg-accent/10 active:text-accent focus:bg-primary/20 focus:text-primary font-montserrat">Contacto</a></li>
                 </ul>
             </div>
 
         </div>
     </div>
+     
+    <!-- CARRUSEL -->
+    <div class="carousel w-full">
+
+        <div id="item1" class="carousel-item w-full">
+            <a onclick="my_modal_5.showModal()"><img src="{% static 'img/REUNION INICIADOS.png' %}" class="w-full" /></a>
+            <dialog id="my_modal_5" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-2xl font-bold font-dm-serif italic">INICIADOS</h3>
+                    <p class="text-sm py-4 font-montserrat font-light text-justify">El Centro Excursionista Capdevielle se prepara para recibir a la nueva generación de Iniciados 2K25. La bienvenida oficial se realizará el día 29 de junio a las 3:00 de la tarde, en las instalaciones del Colegio Cristo Rey. Será el inicio de una nueva aventura llena de aprendizaje, amistad, formación y espíritu CEC. Invitamos a todos los nuevos integrantes a vivir esta experiencia con entusiasmo, compromiso y corazón. ¡Nos vemos allí!</p>
+                    <div class="flex-1">
+                        <img src="{% static 'img/REUNION INICIADOS.png' %}" class="w-full rounded-xl" />
+                    </div>
+                </div>
+                <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
+            
+        </div>
+    </div>
+
+    <div class="flex w-full justify-center gap-2 py-2">
+        <a href="#item1" class="btn btn-s hover:bg-accent/30 hover:text-accent active:bg-primary/40 active:text-primary font-montserrat font-light">Iniciados</a>
+    </div>
+
+    <!-- INFO -->
+    <div class="card lg:card-side bg-base-200 shadow-lg m-6.5 mt-2 sm:m-10 sm:mt-0">
+        <figure class="hover-gallery w-auto sm:max-w-85">
+            <img src="{% static 'img/PADRE.jpg' %}" />
+            <img src="{% static 'img/FOGATA.jpg' %}" />
+            <img src="{% static 'img/CAMPAMENTO.jpg' %}" />
+        </figure>
+        <div class="card-body">
+            <h2 class="font-dm-serif italic text-4xl mb-3">¿QUÉ ES EL CEC?</h2>
+            <p class="font-montserrat font-light text-justify mb-3">El Centro Excursionista Capdevielle (CEC) es una obra educativa de la Compañía de Jesús que nació en el Colegio Cristo Rey para formar jóvenes íntegros, libres, responsables y comprometidos con Dios, con la sociedad y consigo mismos. Fue fundado en 1964 por el Padre Joaquín Jiménez, quien inició esta experiencia juvenil, y más adelante fue impulsado con gran fuerza por el Padre José Ignacio Mendoza S.J., quien consolidó su identidad, espiritualidad y forma de trabajar con los jóvenes.</p>
+            <p class="font-montserrat font-light text-justify">El CEC lleva el nombre de Alberto Capdevielle, joven jesuita cuyo testimonio de servicio y entrega inspira su espíritu. Su actividad principal son los campamentos, que no son simples paseos, sino espacios educativos y comunitarios donde los jóvenes viven fraternidad, liderazgo, responsabilidad, disciplina juvenil, contacto con la naturaleza y encuentro con Dios. Allí se aprende a convivir, servir, crecer y descubrir que “ser más” es siempre para “servir mejor”.</p>
+        </div>
+    </div>
+
+    <!--ÁREAS-->
+    <div class="flex justify-center items-center">
+        <h2 class="font-dm-serif italic text-4xl">
+            ÁREAS
+        </h2>
+    </div>
+
+
+    <div class="flex flex-wrap justify-center items-center gap-5 sm:gap-10 m-6.5 sm:m-10">
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-purple-500/30">
+                <img src="{% static 'img/INICIADOS.png' %}" alt="Iniciados 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-red-500/30">
+                <img src="{% static 'img/ROJA.png' %}" alt="Roja 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-amber-500/30">
+                <img src="{% static 'img/AMARILLA.png' %}" alt="Amarilla 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-white/30">
+                <img src="{% static 'img/UNIVERSITARIA.png' %}" alt="Universitaria 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-sky-500/30">
+                <img src="{% static 'img/GUIAS.png' %}" alt="Guías 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="hover-3d">
+        
+            <figure class="w-80 sm:w-95 rounded-2xl glass p-5 bg-emerald-500/30">
+                <img src="{% static 'img/DIRECTIVA.png' %}" alt="Directiva 2k25" class="rounded-xl"/>
+            </figure>
+        
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+    </div>
+
+    <!-- DECÁLOGO -->
+    <div class="carousel">
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.webp"
+            alt="Burger" />
+        </div>
+        <div class="carousel-item">
+            <img
+            src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.webp"
+            alt="Burger" />
+        </div>
+    </div>
+
 
 </body>
 
