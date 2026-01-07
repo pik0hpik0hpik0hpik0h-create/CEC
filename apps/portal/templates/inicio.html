@@ -13,13 +13,14 @@
 <body class="min-h-screen bg-base-300">
     
     <!-- CAMBIO DE TEMA -->
-    <div class="h-10 flex justify-end items-center" style="background-color: var(--color-extra-1);">
+    <div class="h-10 flex justify-between items-center" style="background-color: var(--color-extra-1);">
 
         <label class="swap swap-rotate text-accent cursor-pointer">
+
             <input type="checkbox" id="cambio_tema" />
 
             <!-- CLARO -->
-            <svg class="swap-on h-5 w-5 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg class="swap-on h-5 w-5 fill-current ml-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,                
                 1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,
                 17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,
@@ -41,11 +42,14 @@
             </svg>
 
             <!-- OSCURO -->
-            <svg class="swap-off h-5 w-5 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg class="swap-off h-5 w-5 fill-current ml-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="none" stroke="currentColor" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
 
         </label>
+
+        <a href="{% url 'login' %}"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent fill-current mr-3 cursor-pointer" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M240 192C240 147.8 275.8 112 320 112C364.2 112 400 147.8 400 192C400 236.2 364.2 272 320 272C275.8 272 240 236.2 240 192zM448 192C448 121.3 390.7 64 320 64C249.3 64 192 121.3 192 192C192 262.7 249.3 320 320 320C390.7 320 448 262.7 448 192zM144 544C144 473.3 201.3 416 272 416L368 416C438.7 416 496 473.3 496 544L496 552C496 565.3 506.7 576 520 576C533.3 576 544 565.3 544 552L544 544C544 446.8 465.2 368 368 368L272 368C174.8 368 96 446.8 96 544L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 544z"/></svg></a>
+
     </div>
     
     <div class="bg-accent h-1 sticky top-0 z-100"></div>
@@ -464,7 +468,5 @@
 </body>
 
 <script src="{% static 'js/theme.js' %}"></script>
-
-</body>
 
 </html>
