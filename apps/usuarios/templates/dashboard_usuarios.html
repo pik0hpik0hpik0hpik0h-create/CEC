@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Elecciones</title>
+    <title>Usuarios</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
@@ -43,24 +43,24 @@
             <!-- Page content here -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 m-10 sm:gap-15 sm:m-15 md:gap-20 md:m-20">
 
-                <a href="{% url 'crear_primera_vuelta' %}" class="flex flex-col justify-center items-center bg-primary/40 hover:bg-primary/50 active:bg-primary/60 aspect-square rounded-lg text-primary hover:scale-105 active:scale-95 transition-all duration-200 ease-out">
+                <a href="{% url 'registrar_usuario' %}" class="flex flex-col justify-center items-center bg-primary/40 hover:bg-primary/50 active:bg-primary/60 aspect-square rounded-lg text-primary hover:scale-105 active:scale-95 transition-all duration-200 ease-out">
                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block w-25 h-25"><!--!Font Awesome Pro v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2026 Fonticons, Inc.--><path d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block w-25 h-25"><path d="M136 192C136 125.7 189.7 72 256 72C322.3 72 376 125.7 376 192C376 258.3 322.3 312 256 312C189.7 312 136 258.3 136 192zM48 546.3C48 447.8 127.8 368 226.3 368L285.7 368C384.2 368 464 447.8 464 546.3C464 562.7 450.7 576 434.3 576L77.7 576C61.3 576 48 562.7 48 546.3zM544 160C557.3 160 568 170.7 568 184L568 232L616 232C629.3 232 640 242.7 640 256C640 269.3 629.3 280 616 280L568 280L568 328C568 341.3 557.3 352 544 352C530.7 352 520 341.3 520 328L520 280L472 280C458.7 280 448 269.3 448 256C448 242.7 458.7 232 472 232L520 232L520 184C520 170.7 530.7 160 544 160z"/></svg>
                     </span>
-                    <span class="text-lg">
-                        PRIMERA VUELTA
+                    <span class="text-lg text-wrap text-center">
+                        REGISTRAR USUARIO
                     </span>
                 </a>
 
-                <a href="#" class="flex flex-col justify-center items-center bg-primary/40 hover:bg-primary/50 active:bg-primary/60 aspect-square rounded-lg text-primary hover:scale-105 active:scale-95 transition-all duration-200 ease-out">
+                <a href=" " class="flex flex-col justify-center items-center bg-primary/40 hover:bg-primary/50 active:bg-primary/60 aspect-square rounded-lg text-primary hover:scale-105 active:scale-95 transition-all duration-200 ease-out">
                     <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block w-25 h-25"><!--!Font Awesome Pro v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2026 Fonticons, Inc.--><path d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block w-25 h-25"><path d="M320 16a104 104 0 1 1 0 208 104 104 0 1 1 0-208zM96 88a72 72 0 1 1 0 144 72 72 0 1 1 0-144zM0 416c0-70.7 57.3-128 128-128 12.8 0 25.2 1.9 36.9 5.4-32.9 36.8-52.9 85.4-52.9 138.6l0 16c0 11.4 2.4 22.2 6.7 32L32 480c-17.7 0-32-14.3-32-32l0-32zm521.3 64c4.3-9.8 6.7-20.6 6.7-32l0-16c0-53.2-20-101.8-52.9-138.6 11.7-3.5 24.1-5.4 36.9-5.4 70.7 0 128 57.3 128 128l0 32c0 17.7-14.3 32-32 32l-86.7 0zM472 160a72 72 0 1 1 144 0 72 72 0 1 1 -144 0zM160 432c0-88.4 71.6-160 160-160s160 71.6 160 160l0 16c0 17.7-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32l0-16z"/></svg>
                     </span>
                     <span class="text-lg">
-                        SEGUNDA VUELTA
+                        REGISTRAR CON CSV
                     </span>
                 </a>
-            
+
             </div>
         </div>
 

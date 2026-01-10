@@ -8,6 +8,7 @@
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
+    <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
 </head>
 
 <body class="bg-animado-login min-h-screen">
@@ -16,19 +17,44 @@
 
         <div class="absolute inset-0 bg-[url('/static/img/LOGINBG.png')] bg-cover bg-center opacity-10"></div>
 
-        <form class="relative bg-white/20 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+        <form method="post" novalidate class="relative bg-white/20 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+            
+            {% csrf_token %}
 
             <img src="{% static 'img/LOGO_HEADER.png' %}" alt="Logo del CEC" class="h-17 brightness-0 invert-100 mx-auto block">
 
             <h1 class="font-montserrat text-white text-center font-semibold">Iniciar Sesión</h1>
 
             <label class="font-montserrat text-white text-sm font-light">Usuario</label>
-            <input type="email" class="bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" placeholder="Usuario" />
+            <div>
+                {{ form.username }}
+
+                {% for error in form.username.errors %}
+                    <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </div>
             
             <label class="font-montserrat text-white text-sm font-light">Contraseña</label>
-            <input type="password" class="bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" placeholder="Contraseña" />
+            <div>
+                {{ form.password }}
 
-            <a href="{% url 'dashboard' %}" class="rounded-lg btn border-0 w-full mt-9 items-center bg-indigo-950 text-indigo-300 hover:bg-indigo-900 active:bg-indigo-800">Ingresar</a>
+                {% for error in form.password.errors %}
+                    <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="rounded-lg btn border-0 w-full mt-9 items-center bg-indigo-950 text-indigo-300 hover:bg-indigo-900 active:bg-indigo-800">Ingresar</button>
+            <div>
+                {% for error in form.non_field_errors %}
+                    <p class="font-montserrat mt-1 text-xs text-error animate-pulse text-center">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </div>
 
         </form>
 

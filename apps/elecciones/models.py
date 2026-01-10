@@ -1,6 +1,6 @@
 from django.db import models, transaction
 from django.contrib.auth.models import User  
-from apps.usuarios import Persona, Area
+from apps.usuarios.models import Persona, Area
 
 class Periodo(models.Model):
 
