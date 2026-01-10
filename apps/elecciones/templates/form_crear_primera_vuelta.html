@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Crear Primera Vuelta</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
 </head>
@@ -40,18 +40,34 @@
             
             </nav>
             <!-- Page content here -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 m-10 sm:gap-15 sm:m-15 md:gap-20 md:m-20">
+             
+            <div class="flex flex-col items-center justify-center">
 
-                <a href="{% url 'dashboard_elecciones' %}" class="flex flex-col justify-center items-center bg-primary/40 hover:bg-primary/50 active:bg-primary/60 aspect-square rounded-lg text-primary hover:scale-105 active:scale-95 transition-all duration-200 ease-out">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block w-25 h-25"><!--!Font Awesome Pro v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2026 Fonticons, Inc.--><path d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"/></svg>
-                    </span>
-                    <span class="text-lg">
-                        ELECCIONES
-                    </span>
-                </a>
+                <ul class="steps m-10 mb-0 text-sm">
+                    <li class="step step-info">Crear elecciones</li>
+                    <li class="step">Crear urnas</li>
+                    <li class="step">Ingresar candidatos</li>
+                </ul>
 
+                <form class="relative bg-base-100 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+
+                    <img src="{% static 'img/LOGO_FORM.png' %}" alt="Logo del CEC" id="logo_cec" class="h-20 mx-auto block">
+
+                    <h1 class="font-montserrat text-center font-semibold">Crear Primera Vuelta</h1>
+
+                    <label class="font-montserrat text-sm font-light">Periodo</label>
+
+                    <select class="custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" required>
+                        <option value="" disabled selected>Elija un periodo</option>
+                        <option value="2026 - P1">2026 - P1</option>
+                    </select>
+
+                    <a href="{% url 'dashboard' %}" class="rounded-lg btn border-0 w-full mt-9 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Crear Elección</a>
+
+                </form>
+            
             </div>
+
         </div>
 
         <div class="drawer-side is-drawer-close:overflow-visible">

@@ -1,7 +1,56 @@
 /* Tema oscuro para logo del CEC en el header */
-[data-theme="cec-oscuro"] #logo_cec_header {
+[data-theme="cec-oscuro"] #logo_cec {
     filter: invert(0.9);
 }
+
+/* Focus para inputs de forms */
+.form-accent:focus,
+.form-accent:focus-within {
+  --input-color: #ffb800; 
+}
+
+/* Para que los selects no tengan borde gordo al focus */
+.select:focus,
+.select:focus-within {
+    outline: none !important;       
+    box-shadow: 0 0 0 0.5px #ffb800 !important;   
+}
+
+/* Primer item de select como placeholder de color específico */
+.custom-select:invalid {
+    color: #05091080; 
+}
+[data-theme="cec-oscuro"] .custom-select:invalid {
+    color: #ecfff980; 
+}
+
+.custom-select option {
+    color: #050910; 
+}
+[data-theme="cec-oscuro"] .custom-select option {
+    color: #ecfff9; 
+}
+
+.custom-select option[value=""] {
+    color: #05091080;
+}
+[data-theme="cec-oscuro"] .custom-select option[value=""] {
+    color: #ecfff980;
+}
+
+
+/* Color de steps no completados */
+.steps .step:not(.step-info) {
+  --step-bg: #fcffff;  
+  --step-fg: #050910;  
+}
+
+[data-theme="cec-oscuro"] .steps .step:not(.step-info) {
+  --step-bg: #1a1f30;  
+  --step-fg: #ecfff9;  
+}
+
+
 /* Fondo animado para login */
 .bg-animado-login {background: radial-gradient(100% 100% at var(--10-x-position) var(--10-y-position), #001299 -32%, transparent),radial-gradient(100% 100% at var(--11-x-position) var(--11-y-position), #a8e9ff 28%, transparent),radial-gradient(100% 100% at var(--12-x-position) var(--12-y-position), #d15400 -84%, transparent),radial-gradient(100% 100% at var(--13-x-position) var(--13-y-position), #ffed75 -100%, transparent),#ffffff;animation-name: main; animation-iteration-count: infinite; animation-duration: 20s; transition-timing-function: ease-in;}@property --10-x-position {
       syntax: '<percentage>';

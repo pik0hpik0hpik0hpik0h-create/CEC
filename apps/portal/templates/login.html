@@ -16,19 +16,19 @@
 
         <div class="absolute inset-0 bg-[url('/static/img/LOGINBG.png')] bg-cover bg-center opacity-10"></div>
 
-        <form class="relative bg-white/20 rounded-3xl w-80 h-120 border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+        <form class="relative bg-white/20 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
 
             <img src="{% static 'img/LOGO_HEADER.png' %}" alt="Logo del CEC" class="h-17 brightness-0 invert-100 mx-auto block">
 
-            <h1 class="font-montserrat text-xl text-white text-center font-semibold">Iniciar Sesión</h1>
+            <h1 class="font-montserrat text-white text-center font-semibold">Iniciar Sesión</h1>
 
             <label class="font-montserrat text-white text-sm font-light">Usuario</label>
-            <input type="email" class="rounded-lg text-xs font-montserrat font-medium input mt-2 bg-stone-100 text-gray-500 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Usuario" />
-
+            <input type="email" class="bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" placeholder="Usuario" />
+            
             <label class="font-montserrat text-white text-sm font-light">Contraseña</label>
-            <input type="password" class="rounded-lg text-xs font-montserrat font-medium input mt-2 bg-stone-100 text-gray-500 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Contraseña" />
+            <input type="password" class="bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" placeholder="Contraseña" />
 
-            <a href="{% url 'dashboard' %}" class="rounded-lg btn border-0 w-full text-lg mt-9 items-center bg-indigo-950 text-indigo-300 hover:bg-indigo-900 active:bg-indigo-800">Ingresar</a>
+            <a href="{% url 'dashboard' %}" class="rounded-lg btn border-0 w-full mt-9 items-center bg-indigo-950 text-indigo-300 hover:bg-indigo-900 active:bg-indigo-800">Ingresar</a>
 
         </form>
 
