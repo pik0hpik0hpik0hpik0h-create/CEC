@@ -26,13 +26,13 @@
             <div class="flex flex-wrap space-x-3 items-center">
 
                 <div class="text-xs">
-                    Luis Pico
+                    {{ usuario_nombre }}
                 </div>
 
                 <div class="avatar">
 
                     <div class="w-7 rounded-full mr-2 ring-accent ring-2">
-                        <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+                        <img src="{{ usuario_foto }}" />
                     </div>
 
                 </div>
@@ -44,7 +44,7 @@
              
             <div class="flex flex-col items-center justify-center">
 
-                <form method="post" novalidate class="relative bg-base-100 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+                <form method="post" autocomplete="off" novalidate class="relative bg-base-100 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
 
                     {% csrf_token %}
 
@@ -108,13 +108,26 @@
                     </div>
 
                     <label class="font-montserrat text-sm font-light">Fecha de nacimiento</label>
+                    <div>
+                        {{ form.fecha_nacimiento }}
+
+                        {% for error in form.fecha_nacimiento.errors %}
+                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
 
                     <label class="font-montserrat text-sm font-light">Área</label>
+                    <div>
+                        {{ form.area }}
 
-                    <select class="custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50" required>
-                        <option value="" disabled selected>Elija un periodo</option>
-                        <option value="2026 - P1">2026 - P1</option>
-                    </select>
+                        {% for error in form.area.errors %}
+                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
+                                {{ error }}
+                            </p>
+                        {% endfor %}
+                    </div>
 
                     <button type="submit" class="rounded-lg btn border-0 w-full mt-9 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Registrar Usuario</button>
 

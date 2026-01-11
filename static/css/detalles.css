@@ -3,6 +3,23 @@
     filter: invert(0.9);
 }
 
+@media print {
+    [data-theme="cec-oscuro"] #logo_cec {
+        filter: none !important;
+    }
+}
+
+/* Quitar datos de impresión */
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+    }
+}
+
 /* Focus para inputs de forms */
 .form-accent:focus,
 .form-accent:focus-within {
@@ -49,7 +66,6 @@
   --step-bg: #1a1f30;  
   --step-fg: #ecfff9;  
 }
-
 
 /* Fondo animado para login */
 .bg-animado-login {background: radial-gradient(100% 100% at var(--10-x-position) var(--10-y-position), #001299 -32%, transparent),radial-gradient(100% 100% at var(--11-x-position) var(--11-y-position), #a8e9ff 28%, transparent),radial-gradient(100% 100% at var(--12-x-position) var(--12-y-position), #d15400 -84%, transparent),radial-gradient(100% 100% at var(--13-x-position) var(--13-y-position), #ffed75 -100%, transparent),#ffffff;animation-name: main; animation-iteration-count: infinite; animation-duration: 20s; transition-timing-function: ease-in;}@property --10-x-position {

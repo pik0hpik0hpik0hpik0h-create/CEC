@@ -26,7 +26,7 @@ class Elecciones(models.Model):
         ('2', 'V2'),
     ] 
 
-    periodo = models.ForeignKey(Periodo, on_delete=models.SET_NULL, null=True, blank=True, related_name='elecciones')
+    periodo = models.ForeignKey(Periodo, on_delete=models.PROTECT, null=True, blank=True, related_name='elecciones')
     tipo = models.CharField(max_length=2, choices=TIPO)
     activas = models.BooleanField(default=True)
 
@@ -44,31 +44,31 @@ class Urna(models.Model):
         ('U', 'Unisex'),
     ] 
 
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.SET_NULL, null=True, blank=True, related_name='urnas_elecciones')
-    area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True, blank=True, related_name='urnas_area')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='urnas_elecciones')
+    area = models.ForeignKey(Area, on_delete=models.PROTECT, null=True, blank=True, related_name='urnas_area')
     genero = models.CharField(max_length=1, choices=GENERO)
-    usuario = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='urna_usuario')
+    usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='urna_usuario')
 
 class Candidato_Jefe(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_jefe_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_jefe_elecciones')
+    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefe_persona')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefe_elecciones')
 
 class Candidato_Jefa(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_jefa_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_jefa_elecciones')
+    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefa_persona')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefa_elecciones')
 
 class Candidato_Materiales(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_materiales_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.SET_NULL, null=True, blank=True, related_name='candidato_materiales_elecciones')
+    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_persona')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_elecciones')
 
 class Voto(models.Model):
-    urna = models.ForeignKey(Urna, on_delete=models.SET_NULL, null=True, blank=True, related_name='votos_urna')
-    persona = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True, related_name='votos_persona')
+    urna = models.ForeignKey(Urna, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_urna')
+    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_persona')
     permitido = models.BooleanField(default=False)
     completo = models.BooleanField(default=False)
-    voto_jefe = models.ForeignKey(Candidato_Jefe, on_delete=models.SET_NULL, null=True, blank=True, related_name='votos_jefe')
-    voto_jefa = models.ForeignKey(Candidato_Jefa, on_delete=models.SET_NULL, null=True, blank=True, related_name='votos_jefa')
-    voto_materiales = models.ForeignKey(Candidato_Materiales, on_delete=models.SET_NULL, null=True, blank=True, related_name='votos_materiales')
+    voto_jefe = models.ForeignKey(Candidato_Jefe, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefe')
+    voto_jefa = models.ForeignKey(Candidato_Jefa, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefa')
+    voto_materiales = models.ForeignKey(Candidato_Materiales, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_materiales')
 
     class Meta:
         constraints = [

@@ -1,0 +1,17 @@
+from .models import Persona
+
+def usuario_actual(request):
+    if request.user.is_authenticated:
+        try:
+            persona = Persona.objects.get(usuario=request.user)
+            return {
+                'usuario_persona': persona,
+                'usuario_nombre': persona.nombre,
+                'usuario_apellido': persona.apellido,
+                'usuario_nombre_completo': f"{persona.nombre} {persona.apellido}",
+                'usuario_foto': persona.foto.url if persona.foto else None,
+            }
+        except Persona.DoesNotExist:
+            pass
+
+    return {}

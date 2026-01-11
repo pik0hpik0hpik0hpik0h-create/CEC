@@ -19,6 +19,7 @@
     --color-purple-500: oklch(62.7% 0.265 303.9);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-stone-100: oklch(97% 0.001 106.424);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xs: 0.75rem;
@@ -31,12 +32,15 @@
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-light: 300;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --font-weight-black: 900;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
@@ -2329,11 +2333,17 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
   .mt-5 {
     margin-top: calc(var(--spacing) * 5);
   }
   .mt-9 {
     margin-top: calc(var(--spacing) * 9);
+  }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -2485,10 +2495,6 @@
     width: calc(var(--spacing) * 10);
     height: calc(var(--spacing) * 10);
   }
-  .size-auto {
-    width: auto;
-    height: auto;
-  }
   .h-1 {
     height: calc(var(--spacing) * 1);
   }
@@ -2545,6 +2551,9 @@
   }
   .w-80 {
     width: calc(var(--spacing) * 80);
+  }
+  .w-100 {
+    width: calc(var(--spacing) * 100);
   }
   .w-auto {
     width: auto;
@@ -2865,14 +2874,6 @@
   .fill-current {
     fill: currentcolor;
   }
-  .radio-sm {
-    @layer daisyui.l1.l2 {
-      padding: 0.1875rem;
-      &:is([type="radio"]) {
-        --size: calc(var(--size-selector, 0.25rem) * 5);
-      }
-    }
-  }
   .radio-xs {
     @layer daisyui.l1.l2 {
       padding: 0.125rem;
@@ -2938,6 +2939,10 @@
     font-size: var(--text-xs);
     line-height: var(--tw-leading, var(--text-xs--line-height));
   }
+  .font-black {
+    --tw-font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-black);
+  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -2963,6 +2968,9 @@
   .text-base-content {
     color: var(--color-base-content);
   }
+  .text-black {
+    color: var(--color-black);
+  }
   .text-error {
     color: var(--color-error);
   }
@@ -2972,6 +2980,9 @@
   .text-indigo-300 {
     color: var(--color-indigo-300);
   }
+  .text-info {
+    color: var(--color-info);
+  }
   .text-primary {
     color: var(--color-primary);
   }
@@ -2980,6 +2991,9 @@
   }
   .text-secondary {
     color: var(--color-secondary);
+  }
+  .text-warning {
+    color: var(--color-warning);
   }
   .text-white {
     color: var(--color-white);
@@ -3450,6 +3464,75 @@
   .xl\:flex-row {
     @media (width >= 80rem) {
       flex-direction: row;
+    }
+  }
+  .print\:block {
+    @media print {
+      display: block;
+    }
+  }
+  .print\:hidden {
+    @media print {
+      display: none;
+    }
+  }
+  .print\:h-40 {
+    @media print {
+      height: calc(var(--spacing) * 40);
+    }
+  }
+  .print\:h-50 {
+    @media print {
+      height: calc(var(--spacing) * 50);
+    }
+  }
+  .print\:w-100 {
+    @media print {
+      width: calc(var(--spacing) * 100);
+    }
+  }
+  .print\:w-150 {
+    @media print {
+      width: calc(var(--spacing) * 150);
+    }
+  }
+  .print\:w-180 {
+    @media print {
+      width: calc(var(--spacing) * 180);
+    }
+  }
+  .print\:w-200 {
+    @media print {
+      width: calc(var(--spacing) * 200);
+    }
+  }
+  .print\:text-2xl {
+    @media print {
+      font-size: var(--text-2xl);
+      line-height: var(--tw-leading, var(--text-2xl--line-height));
+    }
+  }
+  .print\:text-3xl {
+    @media print {
+      font-size: var(--text-3xl);
+      line-height: var(--tw-leading, var(--text-3xl--line-height));
+    }
+  }
+  .print\:text-4xl {
+    @media print {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+  .print\:text-xl {
+    @media print {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
+  .print\:text-black {
+    @media print {
+      color: var(--color-black);
     }
   }
   .is-drawer-close\:tooltip {
