@@ -1,12 +1,13 @@
 import csv
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import LoginView
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import FormView
 import io
-from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv
+from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv, form_nueva_clave
 from core.funciones_generales.utils import ahora
 from apps.usuarios.utils import crear_usuario
 from .models import Area, Persona
@@ -17,6 +18,27 @@ class login_view(LoginView):
     authentication_form = form_login
     redirect_authenticated_user = True
     next_page = reverse_lazy('dashboard')
+
+# INGRESAR NUEVA CONTRASEÑA
+def ingresar_nueva_clave(request):
+
+    form = form_nueva_clave(user=request.user, data=request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()  
+
+            persona = request.user.persona
+            persona.clave_temporal = False
+            persona.save()
+
+            update_session_auth_hash(request, request.user)
+
+            messages.success(request, 'Contraseña actualizada correctamente')
+            return redirect('dashboard')
+
+    return render(request, 'ingresar_nueva_clave.html', {'form': form})
+
 
 # DASHBOARD DE USUARIOS
 def dashboard_usuarios(request):
@@ -65,6 +87,7 @@ def tarjeta_registrar_usuario(request, persona_id):
 
     return render(request, "tarjeta_registrar_usuario.html", context)
 
+# REGISTRO DE USUARIOS CON CSV
 def registrar_usuarios_csv(request):
 
     if request.method == 'POST':
@@ -105,8 +128,9 @@ def registrar_usuarios_csv(request):
                             area=area,
                         )
 
-
                         usuario, password_temporal = crear_usuario(persona)
+
+                        persona.save()
 
                         personas_creadas.append({
                             'cedula': persona.cedula,
@@ -138,7 +162,6 @@ def registrar_usuarios_csv(request):
         form = form_registrar_usuario_csv()
 
     return render(request, 'form_registrar_usuario_csv.html', {'form': form})
-
 
 # REPORTE DE REGISTRO DE PERSONAS CON CSV
 def reporte_usuarios_csv(request):

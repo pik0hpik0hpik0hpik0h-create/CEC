@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
+    <title>Nueva Contraseña</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
@@ -23,24 +23,26 @@
 
             <img src="{% static 'img/LOGO_HEADER.png' %}" alt="Logo del CEC" class="h-17 brightness-0 invert-100 mx-auto block">
 
-            <h1 class="font-montserrat text-white text-center font-semibold">Iniciar Sesión</h1>
+            <h1 class="font-montserrat text-white text-center font-semibold">Nueva Contraseña</h1>
+            <p class="font-montserrat text-xs text-center print:hidden font-light text-warning"><span class="font-semibold">{{ usuario_nombre }}</span>, la contraseña que ingresó era temporal, ingrese una nueva.</p>
 
-            <label class="font-montserrat text-white text-sm font-light">Usuario</label>
+
+            <label class="font-montserrat text-white text-sm font-light">Contraseña</label>
             <div>
-                {{ form.username }}
+                {{ form.new_password1 }}
 
-                {% for error in form.username.errors %}
+                {% for error in form.new_password1.errors %}
                     <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
                         {{ error }}
                     </p>
                 {% endfor %}
             </div>
             
-            <label class="font-montserrat text-white text-sm font-light">Contraseña</label>
+            <label class="font-montserrat text-white text-sm font-light">Confirmar constraseña</label>
             <div>
-                {{ form.password }}
+                {{ form.new_password2 }}
 
-                {% for error in form.password.errors %}
+                {% for error in form.new_password2.errors %}
                     <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
                         {{ error }}
                     </p>

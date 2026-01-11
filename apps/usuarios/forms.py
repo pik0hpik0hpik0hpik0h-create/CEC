@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from datetime import date
 from .models import Area, Persona
@@ -29,6 +29,62 @@ class form_login(AuthenticationForm):
         widget=forms.PasswordInput(attrs={
             'class': 'bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
             'placeholder': 'Contraseña',
+        })
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# NUEVA CONTRASEÑA
+class form_nueva_clave(SetPasswordForm):
+
+    new_password1 = forms.CharField(
+        error_messages={
+        'required': 'Por favor, ingrese nueva contraseña.',
+        },
+        widget=forms.PasswordInput(attrs={
+            'class': 'bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+            'placeholder': 'Nueva contraseña',
+        })
+    )
+
+    new_password2 = forms.CharField(
+        error_messages={
+        'required': 'Por favor, confirme nueva contraseña.',
+        },
+        widget=forms.PasswordInput(attrs={
+            'class': 'bg-stone-100 text-gray-500 rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+            'placeholder': 'Confirmar contraseña',
         })
     )
 
