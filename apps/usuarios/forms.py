@@ -32,6 +32,33 @@ class form_login(AuthenticationForm):
         })
     )
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # REGISTRO DE USUARIO
 class form_registrar_usuario(forms.ModelForm):
 
@@ -165,3 +192,35 @@ class form_registrar_usuario(forms.ModelForm):
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class form_registrar_usuario_csv(forms.Form):
+
+    archivo = forms.FileField(
+        label='Archivo CSV',
+        error_messages={
+            'required': 'Por favor, seleccione un archivo CSV.',
+            'invalid': 'Archivo no válido.',
+        },
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'text-base-content/50 bg-neutral-content rounded-lg text-xs font-montserrat font-medium file-input file-input-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50 w-full',
+            'accept': '.csv',
+        })
+    )

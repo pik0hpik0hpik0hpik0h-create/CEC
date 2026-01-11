@@ -21,3 +21,5 @@ def crear_usuario(persona):
     persona.usuario = user
 
     return user, password_temporal
+
+

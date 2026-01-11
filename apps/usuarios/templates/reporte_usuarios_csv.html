@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Usuario</title>
+    <title>Reporte de Registro de Usuarios con CSV</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
@@ -41,100 +41,34 @@
             
             </nav>
             <!-- Page content here -->
-             
-            <div class="flex flex-col items-center justify-center">
+            <div class="overflow-x-auto m-5">
+                <table class="table table-xs table-zebra">
+                    <thead>
+                        <tr class="bg-base-100">
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Área</th>
+                            <th>Usuario</th>
+                            <th class="text-error">Clave Temporal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <form method="post" autocomplete="off" novalidate class="relative bg-base-100 rounded-3xl w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
-
-                    {% csrf_token %}
-
-                    <img src="{% static 'img/LOGO_FORM.png' %}" alt="Logo del CEC" id="logo_cec" class="h-20 mx-auto block">
-
-                    <h1 class="font-montserrat text-center font-semibold">Registrar Usuario</h1>
-
-                    <label class="font-montserrat text-sm font-light">Cédula</label>
-                    <div>
-                        {{ form.cedula }}
-
-                        {% for error in form.cedula.errors %}
-                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                                {{ error }}
-                            </p>
+                        {% for r in registros %}
+                        <tr>
+                            <td>{{ r.cedula }}</td>
+                            <td>{{ r.nombre }}</td>
+                            <td>{{ r.apellido }}</td>
+                            <td>{{ r.area }}</td>
+                            <td>{{ r.username }}</td>
+                            <td class="text-error">{{ r.password_temporal }}</td>
+                        </tr>
                         {% endfor %}
-                    </div>
 
-                    <label class="font-montserrat text-sm font-light">Nombre</label>
-                    <div>
-                        {{ form.nombre }}
-
-                        {% for error in form.nombre.errors %}
-                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                                {{ error }}
-                            </p>
-                        {% endfor %}
-                    </div>
-
-                    <label class="font-montserrat text-sm font-light">Apellido</label>
-                    <div>
-                        {{ form.apellido }}
-
-                        {% for error in form.apellido.errors %}
-                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                                {{ error }}
-                            </p>
-                        {% endfor %}
-                    </div>
-
-                    <label class="font-montserrat text-sm font-light">Género</label>
-
-                    <div>
-                        <div class="flex gap-6 items-center">
-                            {% for radio in form.genero %}
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    {{ radio.tag }}
-                                    <span class="text-sm text-base-content font-montserrat">
-                                        {{ radio.choice_label }}
-                                    </span>
-                                </label>
-                            {% endfor %}
-                        </div>
-
-                    {% if form.genero.errors %}
-                        <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                            {{ form.genero.errors.0 }}
-                        </p>
-                    {% endif %}
-
-                    </div>
-
-                    <label class="font-montserrat text-sm font-light">Fecha de nacimiento</label>
-                    <div>
-                        {{ form.fecha_nacimiento }}
-
-                        {% for error in form.fecha_nacimiento.errors %}
-                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                                {{ error }}
-                            </p>
-                        {% endfor %}
-                    </div>
-
-                    <label class="font-montserrat text-sm font-light">Área</label>
-                    <div>
-                        {{ form.area }}
-
-                        {% for error in form.area.errors %}
-                            <p class="font-montserrat mt-1 text-xs text-error animate-pulse">
-                                {{ error }}
-                            </p>
-                        {% endfor %}
-                    </div>
-
-                    <button type="submit" class="rounded-lg btn border-0 w-full mt-9 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Registrar Usuario</button>
-
-                </form>
-            
+                    </tfoot>
+                </table>
             </div>
-
         </div>
 
         <div class="drawer-side is-drawer-close:overflow-visible">
