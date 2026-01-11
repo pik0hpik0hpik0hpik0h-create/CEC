@@ -57,6 +57,70 @@ class form_login(AuthenticationForm):
 
 
 
+# EDICIÓN DE PERFIL
+class form_editar_perfil(forms.ModelForm):
+
+    class Meta:
+        model = Persona
+        fields = ['foto', 'fecha_nacimiento']
+
+    foto = forms.ImageField(
+        required=False,
+        error_messages={
+            'invalid': 'Archivo no válido.',
+        },
+        widget=forms.FileInput(attrs={
+            'class': 'text-base-content/50 bg-neutral-content rounded-lg text-xs font-montserrat font-medium file-input file-input-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50 w-full',
+            'accept': 'image/*',
+        })
+    )
+
+    fecha_nacimiento = forms.DateField(
+        input_formats=['%d-%m-%Y'],
+        error_messages={
+            'required': 'Por favor, ingrese una fecha de nacimiento.',
+            'invalid': 'Formato inválido, use dd-mm-aaaa.',
+        },
+        widget=forms.TextInput(attrs={
+            'class': 'bg-neutral-content rounded-lg text-xs font-montserrat font-medium input form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+            'placeholder': 'dd-mm-aaaa',
+        })
+    )
+
+    def clean_fecha_nacimiento(self):
+        fecha = self.cleaned_data.get('fecha_nacimiento')
+
+        if fecha >= date.today():
+            raise forms.ValidationError(
+                'La fecha de nacimiento no puede ser posterior a hoy.'
+            )
+
+        return fecha
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -244,6 +308,17 @@ class form_registrar_usuario(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['area'].queryset = Area.objects.all()
+
+
+
+
+
+
+
+
+
+
+
 
     
 

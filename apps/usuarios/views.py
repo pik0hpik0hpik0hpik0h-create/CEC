@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import FormView
 import io
-from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv, form_nueva_clave
+from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv, form_nueva_clave, form_editar_perfil
 from core.funciones_generales.utils import ahora
 from apps.usuarios.utils import crear_usuario
 from .models import Area, Persona
@@ -185,5 +185,25 @@ def limpiar_reporte_csv(request):
 
     return redirect('dashboard_usuarios')
 
+#EDITAR PERFIL
+def editar_perfil(request):
+
+    persona = request.user.persona
+
+    if request.method == 'POST':
+
+        form = form_editar_perfil(request.POST, request.FILES, instance=persona)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(request, 'Información actualizada correctamente.')
+            return redirect('dashboard')
+
+    else:
+        form = form_editar_perfil(instance=persona)
+
+    return render(request, 'form_editar_perfil.html', {'form': form})
 
 
