@@ -1,14 +1,13 @@
 import csv
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import FormView
 import io
-import secrets
 from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv
+from core.funciones_generales.utils import ahora
 from apps.usuarios.utils import crear_usuario
 from .models import Area, Persona
 
@@ -150,10 +149,18 @@ def reporte_usuarios_csv(request):
         return redirect('registrar_usuarios_csv')
 
     context = {
-        'registros': registros
+        'registros': registros,
+        'ahora': ahora
     }
 
     return render(request, 'reporte_usuarios_csv.html', context)
+
+# LIMPIAR REPORTE
+def limpiar_reporte_csv(request):
+
+    request.session.pop('reporte_usuarios', None)
+
+    return redirect('dashboard_usuarios')
 
 
 

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Registro de Usuarios con CSV</title>
+    <title>Reporte de Registro de Usuarios con CSV ({{ ahora|date:"d-m-Y H-i" }})</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
@@ -17,13 +17,13 @@
         <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content">
             <!-- Navbar -->
-            <nav class="navbar w-full bg-base-200 flex items-center justify-between">
-            <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
+            <nav class="navbar w-full bg-base-200 flex items-center justify-between print:hidden">
+            <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost print:hidden">
                 <!-- Sidebar toggle icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
             </label>
 
-            <div class="flex flex-wrap space-x-3 items-center">
+            <div class="flex flex-wrap space-x-3 items-center print:hidden">
 
                 <div class="text-xs">
                     {{ usuario_nombre }}
@@ -41,15 +41,24 @@
             
             </nav>
             <!-- Page content here -->
+
+            <h1 class="font-montserrat text-center font-black text-2xl text-black hidden print:block mt-10">NUEVOS USUARIOS</h1>
+
+            <div class="flex gap-5 m-5 print:hidden">
+                <a href="{% url 'limpiar_reporte_usuarios_csv' %}" class="flex-1 rounded-lg btn border-0 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Limpiar Datos</a>
+                <button type="button" onclick="window.print()" class="flex-1 rounded-lg btn border-0 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Imprimir PDF</button>
+            </div>
+
             <div class="overflow-x-auto m-5">
-                <table class="table table-xs table-zebra">
+
+                <table class="table table-xs table-zebra print:border print:border-black/50">
                     <thead>
                         <tr class="bg-base-100">
-                            <th>Cédula</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Área</th>
-                            <th>Usuario</th>
+                            <th class="print:text-black">Cédula</th>
+                            <th class="print:text-black">Nombre</th>
+                            <th class="print:text-black">Apellido</th>
+                            <th class="print:text-black">Área</th>
+                            <th class="print:text-black">Usuario</th>
                             <th class="text-error">Clave Temporal</th>
                         </tr>
                     </thead>
@@ -57,11 +66,11 @@
 
                         {% for r in registros %}
                         <tr>
-                            <td>{{ r.cedula }}</td>
-                            <td>{{ r.nombre }}</td>
-                            <td>{{ r.apellido }}</td>
-                            <td>{{ r.area }}</td>
-                            <td>{{ r.username }}</td>
+                            <td class="print:text-black">{{ r.cedula }}</td>
+                            <td class="print:text-black">{{ r.nombre }}</td>
+                            <td class="print:text-black">{{ r.apellido }}</td>
+                            <td class="print:text-black">{{ r.area }}</td>
+                            <td class="print:text-black">{{ r.username }}</td>
                             <td class="text-error">{{ r.password_temporal }}</td>
                         </tr>
                         {% endfor %}
@@ -71,7 +80,7 @@
             </div>
         </div>
 
-        <div class="drawer-side is-drawer-close:overflow-visible">
+        <div class="drawer-side is-drawer-close:overflow-visible print:hidden">
             <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
                 <div class="flex min-h-full flex-col items-start bg-base-100 is-drawer-close:w-14 is-drawer-open:w-64">
                 <!-- Sidebar content here -->
