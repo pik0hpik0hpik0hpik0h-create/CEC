@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta de datos de {{ persona.nombre }} {{ persona.apellido }}</title>
+    <title>Editar Perfil</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
@@ -47,11 +47,17 @@
 
                 <form method="POST" enctype="multipart/form-data" autocomplete="off" novalidate class="relative bg-base-100 rounded-3xl w-80 print:w-150 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
 
-                    <img src="{{ usuario_foto }}" alt="Logo del CEC" class="h-20 print:h-40 mx-auto block rounded-full ring-accent ring">
+                    <div class="avatar flex justify-center items-center">
+
+                        <div class="w-20 rounded-full mr-2 ring-accent ring">
+                            <img src="{{ usuario_foto }}" />
+                        </div>
+
+                    </div>
 
                     {% csrf_token %}
 
-                    <h1 class="font-montserrat text-center font-semibold print:hidden">Tarjeta de Datos</h1>
+                    <h1 class="font-montserrat text-center font-semibold print:hidden">Editar Perfil</h1>
 
                     <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Cédula: <span class="font-light">{{ usuario_persona.cedula }}</span></p>
                     <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Nombre: <span class="font-light">{{ usuario_nombre }}</span></p>

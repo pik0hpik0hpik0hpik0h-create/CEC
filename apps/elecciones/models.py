@@ -19,6 +19,9 @@ class Periodo(models.Model):
                 Periodo.objects.exclude(pk=self.pk).update(activo=False)
             super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f'{self.anio} - {self.get_periodo_display()}'
+
 class Elecciones(models.Model):
 
     TIPO = [

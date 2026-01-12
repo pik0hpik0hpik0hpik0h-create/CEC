@@ -74,7 +74,7 @@ class form_editar_perfil(forms.ModelForm):
             'accept': 'image/*',
         })
     )
-
+ 
     fecha_nacimiento = forms.DateField(
         input_formats=['%d-%m-%Y'],
         error_messages={

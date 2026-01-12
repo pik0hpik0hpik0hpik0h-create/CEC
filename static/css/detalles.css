@@ -55,6 +55,14 @@
     color: #ecfff980;
 }
 
+/* Texto más pequeño y padding para tooltips */
+.tooltip > .tooltip-content,
+.tooltip[data-tip]:before {
+    font-size: 0.75rem !important;       
+    padding-inline: 1rem !important;   
+    padding-block: 0.5rem !important;   
+}
+
 
 /* Color de steps no completados */
 .steps .step:not(.step-info) {
