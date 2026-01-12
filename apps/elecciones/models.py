@@ -39,12 +39,16 @@ class Elecciones(models.Model):
                 Elecciones.objects.exclude(pk=self.pk).update(activas=False)
             super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f'{self.periodo} | {"Primera Vuelta" if self.tipo == "1" else "Segunda Vuelta"}'
+
+
 class Urna(models.Model):
 
     GENERO = [
+        ('U', 'Unisex'),
         ('M', 'Masculino'),
         ('F', 'Femenino'),
-        ('U', 'Unisex'),
     ] 
 
     elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='urnas_elecciones')
