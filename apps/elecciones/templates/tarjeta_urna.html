@@ -41,7 +41,8 @@
             
             </nav>
             <!-- Page content here -->
-             {% for message in messages %}
+
+            {% for message in messages %}
 
                 {% if message.tags == 'success' %}
                 <div role="alert" class="fixed bottom-5 z-50 alert alert-success transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
@@ -215,5 +216,6 @@
 </body>
 
 <script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/alertas.js' %}"></script>
 
 </html>

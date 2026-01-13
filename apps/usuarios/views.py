@@ -1,6 +1,8 @@
 import csv
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,6 +11,7 @@ from django.views.generic.edit import FormView
 import io
 from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv, form_nueva_clave, form_editar_perfil
 from core.funciones_generales.utils import ahora
+from apps.usuarios.decorators import permiso_required, permiso_required_cbv
 from apps.usuarios.utils import crear_usuario
 from .models import Area, Persona
 
@@ -20,6 +23,7 @@ class login_view(LoginView):
     next_page = reverse_lazy('dashboard')
 
 # INGRESAR NUEVA CONTRASEÑA
+@login_required
 def ingresar_nueva_clave(request):
 
     form = form_nueva_clave(user=request.user, data=request.POST or None)
@@ -41,12 +45,15 @@ def ingresar_nueva_clave(request):
 
 
 # DASHBOARD DE USUARIOS
+@login_required
+@permiso_required('admin', 'secretaria')
 def dashboard_usuarios(request):
 
     return render(request, "dashboard_usuarios.html")
 
 # FORMULARIO DE REGISTRO DE USUARIO
-class registrar_usuario(FormView):
+@permiso_required_cbv('admin', 'secretaria')
+class registrar_usuario(LoginRequiredMixin, FormView):
     
     form_class = form_registrar_usuario
     template_name = 'form_registrar_usuario.html'
@@ -75,6 +82,8 @@ class registrar_usuario(FormView):
         return reverse('tarjeta_registrar_usuario', kwargs={'persona_id': self.persona_id})
     
 # TARJETA DE DATOS DE PERSONA
+@login_required
+@permiso_required('admin', 'secretaria')
 def tarjeta_registrar_usuario(request, persona_id):
 
     persona = get_object_or_404(Persona, id=persona_id)
@@ -88,6 +97,8 @@ def tarjeta_registrar_usuario(request, persona_id):
     return render(request, "tarjeta_registrar_usuario.html", context)
 
 # REGISTRO DE USUARIOS CON CSV
+@login_required
+@permiso_required('admin')
 def registrar_usuarios_csv(request):
 
     if request.method == 'POST':
@@ -161,6 +172,8 @@ def registrar_usuarios_csv(request):
     return render(request, 'form_registrar_usuario_csv.html', {'form': form})
 
 # REPORTE DE REGISTRO DE PERSONAS CON CSV
+@login_required
+@permiso_required('admin')
 def reporte_usuarios_csv(request):
 
     registros = request.session.get('reporte_usuarios', [])
@@ -176,6 +189,8 @@ def reporte_usuarios_csv(request):
     return render(request, 'reporte_usuarios_csv.html', context)
 
 # LIMPIAR REPORTE
+@login_required
+@permiso_required('admin')
 def limpiar_reporte_csv(request):
 
     request.session.pop('reporte_usuarios', None)
@@ -183,6 +198,7 @@ def limpiar_reporte_csv(request):
     return redirect('dashboard_usuarios')
 
 #EDITAR PERFIL
+@login_required
 def editar_perfil(request):
 
     persona = request.user.persona

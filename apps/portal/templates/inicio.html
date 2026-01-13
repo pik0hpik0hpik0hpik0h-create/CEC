@@ -12,6 +12,28 @@
 </head>
 
 <body class="min-h-screen bg-base-300">
+
+    {% for message in messages %}
+
+        {% if message.tags == 'success' %}
+            <div role="alert" class="fixed bottom-5 z-50 alert alert-success transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+        {% endif %}
+
+        {% if message.tags == 'error' %}
+            <div role="alert" class="fixed bottom-5 z-50 alert alert-error transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+        {% endif %}
+
+    {% endfor %}
     
     <!-- CAMBIO DE TEMA -->
     <div class="h-10 flex justify-between items-center" style="background-color: var(--color-extra-1);">
@@ -469,5 +491,6 @@
 </body>
 
 <script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/alertas.js' %}"></script>
 
 </html>

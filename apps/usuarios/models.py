@@ -15,7 +15,7 @@ class Persona(models.Model):
         ('F', 'Femenino'),
     ] 
 
-    cedula = models.CharField(max_length=10, unique=True, blank=True, default='')
+    cedula = models.CharField(max_length=10, unique=True, null=True, blank=True, default=None)
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     genero = models.CharField(max_length=1, choices=GENERO)
@@ -27,10 +27,11 @@ class Persona(models.Model):
 
 class Permiso(models.Model): 
     nombre = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
 
 class Permiso_Usuario(models.Model):
-    permiso = models.ForeignKey(Permiso, on_delete=models.PROTECT)
-    usuario = models.ForeignKey(User, on_delete=models.PROTECT)
+    permiso = models.ForeignKey(Permiso, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='permisos')
 
 
     

@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.usuarios.context_processors.usuario_actual',
+                'apps.usuarios.context_processors.permisos_context',
             ],
         },
     },

@@ -15,3 +15,15 @@ def usuario_actual(request):
             pass
 
     return {}
+
+
+def permisos_context(request):
+   
+    permisos = []
+
+    if request.user.is_authenticated:
+        
+        if hasattr(request.user, 'permisos'):
+            permisos = request.user.permisos.values_list('permiso__slug', flat=True)
+
+    return {'permisos_usuario': permisos}

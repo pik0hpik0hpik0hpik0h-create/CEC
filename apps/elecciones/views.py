@@ -1,23 +1,29 @@
 from django.db import transaction
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
+from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
 from .forms import form_crear_primera_vuelta, form_crear_urna
 from .models import Periodo, Elecciones, Urna
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
-
+@login_required
 def dashboard_elecciones(request):
  
     return render(request, "dashboard_elecciones.html")
 
+@login_required
+@permiso_required('admin', 'elecciones')
 def dashboard_crear_elecciones(request):
 
     return render(request, "dashboard_crear_elecciones.html")
 
 # CREAR PRIMERA VUELTA
-class crear_primera_vuelta(FormView):
+@permiso_required_cbv('admin', 'elecciones')
+class crear_primera_vuelta(LoginRequiredMixin,FormView):
     
     form_class = form_crear_primera_vuelta
     template_name = 'form_crear_primera_vuelta.html'
@@ -49,7 +55,8 @@ class crear_primera_vuelta(FormView):
         return super().form_valid(form)
     
 # CREAR URNA
-class crear_urna(FormView):
+@permiso_required_cbv('admin', 'elecciones')
+class crear_urna(LoginRequiredMixin,FormView):
     
     form_class = form_crear_urna
     template_name = 'form_crear_urna.html'
@@ -79,8 +86,6 @@ class crear_urna(FormView):
                 self.urna_id = urna.id
 
                 crear_votos_urna(urna, persona)
-
-                #transaction.set_rollback(True)
             
             messages.success(self.request, 'Urna creada correctamente.')
 
@@ -94,16 +99,18 @@ class crear_urna(FormView):
         return reverse('tarjeta_urna', kwargs={'urna_id': self.urna_id})
 
 # TARJETA DE DATOS DE PERSONA
+@login_required
+@permiso_required('admin', 'elecciones')
 def tarjeta_urna(request, urna_id):
 
     urna = get_object_or_404(Urna, id=urna_id)
-    password = request.session.get('password', None)
+    password = request.session.pop('password', None)
     padron = urna.votos_urna.all().order_by('persona__apellido')
 
     context = {
         'urna': urna,
         'password': password,
-        'padron': padron
+        'padron': padron 
     }
 
     return render(request, "tarjeta_urna.html", context)
