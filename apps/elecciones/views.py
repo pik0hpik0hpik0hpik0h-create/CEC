@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
-from .forms import form_crear_primera_vuelta, form_crear_urna
+from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato
 from .models import Periodo, Elecciones, Urna
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
@@ -114,4 +114,28 @@ def tarjeta_urna(request, urna_id):
     }
 
     return render(request, "tarjeta_urna.html", context)
+
+# REGISTRAR CANDIDATO
+@permiso_required_cbv('admin', 'elecciones')
+class registrar_candidato(LoginRequiredMixin,FormView):
+    
+    form_class = form_registrar_candidato
+    template_name = 'form_registrar_candidato.html'
+    success_url = reverse_lazy('registrar_candidato')
+
+    def form_valid(self, form):
+
+        try:
+            with transaction.atomic():
+
+                form.save(commit=False)
+            
+            messages.success(self.request, 'Candidato registrado correctamente.')
+
+        except Exception as e:
+            form.add_error(None, f'Ocurrió un error al registrar al candidato. {e}')
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+    
     

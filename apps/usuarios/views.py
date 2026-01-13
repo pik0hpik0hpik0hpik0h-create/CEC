@@ -142,6 +142,10 @@ def registrar_usuarios_csv(request):
                         usuario, password_temporal = crear_usuario(persona)
 
                         persona.save()
+                        
+                        print("==============================================")
+                        print(persona.nombre + " " + persona.apellido)
+                        print(usuario)
 
                         personas_creadas.append({
                             'cedula': persona.cedula,
@@ -155,10 +159,7 @@ def registrar_usuarios_csv(request):
 
                 except Exception as e:
 
-                    messages.error(
-                        request,
-                        f"Error en cédula {fila.get('cedula')}: {str(e)}"
-                    )
+                    messages.error(request,f"Error en cédula {fila.get('cedula')}: {str(e)}")
 
             request.session['reporte_usuarios'] = personas_creadas
 

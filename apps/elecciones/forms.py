@@ -1,6 +1,6 @@
 from django import forms
-from apps.usuarios.models import Area
-from .models import Elecciones, Periodo, Urna
+from apps.usuarios.models import Area, Persona
+from .models import Elecciones, Periodo, Urna, Candidato
 
 # CREAR PRIMERA VUELTA DE ELECCIONES
 class form_crear_primera_vuelta(forms.ModelForm):
@@ -27,7 +27,7 @@ class form_crear_primera_vuelta(forms.ModelForm):
 
         self.fields['periodo'].queryset = Periodo.objects.filter(activo=True)
 
-# CREAR URNAS
+# CREAR URNAS 
 class form_crear_urna(forms.ModelForm):
 
     class Meta:
@@ -75,3 +75,56 @@ class form_crear_urna(forms.ModelForm):
             'required': 'Por favor, seleccione un género.',
         }
     )
+
+# REGISTRAR CANDIDATOS
+class form_registrar_candidato(forms.ModelForm):
+
+    class Meta:
+        model = Candidato
+        fields = ['persona', 'elecciones', 'tipo']
+    
+    #ELECCIONES
+    elecciones = forms.ModelChoiceField(
+        queryset=Elecciones.objects.filter(activas=True),   
+        initial=Elecciones.objects.filter(activas=True).first(),
+        empty_label=None,
+
+        error_messages={
+            'required': 'Por favor, seleccione unas elecciones.',
+        },
+        widget=forms.Select(attrs={
+            'class': 'custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+        })
+    )
+
+    #PERSONA
+    persona = forms.ModelMultipleChoiceField(
+        queryset=Persona.objects.filter(area__nombre__in=['Roja', 'Amarilla']).exclude(cedula=None),
+        required=True,
+
+        error_messages={
+            'required': 'Por favor, seleccione al menos una persona.',
+        },
+
+        widget=forms.SelectMultiple(attrs={
+            'class': 'custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+        })
+    )
+
+    #TIPO
+    tipo = forms.ChoiceField(
+        choices=(
+            ('', 'Elija un cargo'),
+            ('JCM', 'Jefe de Campamento'),
+            ('JCF', 'Jefa de Campamento'),
+            ('JM', 'Jefe(a) de Materiales'),
+        ),
+        required=True,
+        widget=forms.Select(attrs={
+            'class': 'custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+        }),
+        error_messages={
+            'required': 'Por favor, seleccione un cargo.',
+        }
+    )
+

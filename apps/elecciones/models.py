@@ -23,7 +23,7 @@ class Periodo(models.Model):
         return f'{self.anio} - {self.get_periodo_display()}'
 
 class Elecciones(models.Model):
-
+ 
     TIPO = [
         ('1', 'V1'),
         ('2', 'V2'),
@@ -56,26 +56,27 @@ class Urna(models.Model):
     genero = models.CharField(max_length=1, choices=GENERO)
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='urna_usuario')
 
-class Candidato_Jefe(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefe_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefe_elecciones')
 
-class Candidato_Jefa(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefa_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_jefa_elecciones')
+class Candidato(models.Model):
 
-class Candidato_Materiales(models.Model):
+    TIPO = [
+        ('JCM', 'Jefe de Campamento'),
+        ('JCF', 'Jefa de Campamento'),
+        ('JM', 'Jefe(a) de Materiales'),
+    ] 
+
     persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_persona')
     elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_elecciones')
+    tipo = models.CharField(max_length=3, choices=TIPO)
 
 class Voto(models.Model):
     urna = models.ForeignKey(Urna, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_urna')
     persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_persona')
     permitido = models.BooleanField(default=False)
     completo = models.BooleanField(default=False)
-    voto_jefe = models.ForeignKey(Candidato_Jefe, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefe')
-    voto_jefa = models.ForeignKey(Candidato_Jefa, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefa')
-    voto_materiales = models.ForeignKey(Candidato_Materiales, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_materiales')
+    voto_jefe = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefe')
+    voto_jefa = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefa')
+    voto_materiales = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_materiales')
 
     class Meta:
         constraints = [
