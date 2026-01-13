@@ -151,10 +151,7 @@ def registrar_usuarios_csv(request):
 
             request.session['reporte_usuarios'] = personas_creadas
 
-            messages.success(
-                request,
-                f"Se cargaron {len(personas_creadas)} usuarios correctamente"
-            )
+            messages.success(request, f"Se cargaron {len(personas_creadas)} usuarios correctamente")
 
             return redirect('reporte_usuarios_csv')
 

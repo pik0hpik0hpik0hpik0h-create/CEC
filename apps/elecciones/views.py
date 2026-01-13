@@ -1,10 +1,11 @@
 from django.db import transaction
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from .forms import form_crear_primera_vuelta, form_crear_urna
 from .models import Periodo, Elecciones, Urna
+from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
 
 def dashboard_elecciones(request):
@@ -20,7 +21,7 @@ class crear_primera_vuelta(FormView):
     
     form_class = form_crear_primera_vuelta
     template_name = 'form_crear_primera_vuelta.html'
-    success_url = reverse_lazy('crear_primera_vuelta')
+    success_url = reverse_lazy('crear_urna')
 
     def form_valid(self, form):
 
@@ -39,8 +40,6 @@ class crear_primera_vuelta(FormView):
 
                 elecciones.save()
 
-                self.elecciones_id = elecciones.id
-
             messages.success(self.request, 'Primera vuelta creada correctamente.')
 
         except Exception as e:
@@ -49,15 +48,11 @@ class crear_primera_vuelta(FormView):
 
         return super().form_valid(form)
     
-    #def get_success_url(self):
-        #return reverse('form_crear_urnas.html', kwargs={'elecciones_id': self.elecciones_id})
-    
 # CREAR URNA
 class crear_urna(FormView):
     
     form_class = form_crear_urna
     template_name = 'form_crear_urna.html'
-    success_url = reverse_lazy('crear_urna')
 
     def form_valid(self, form):
 
@@ -67,16 +62,25 @@ class crear_urna(FormView):
                 urna = form.save(commit=False)
 
                 elecciones_activas = Elecciones.objects.filter(activas=True).first()
-                genero_nueva_urna = urna.genero
-                area_nueva_urna = urna.area
 
-                if Urna.objects.filter(elecciones=elecciones_activas, genero=genero_nueva_urna, area=area_nueva_urna).exists():
+                print("Creando urna: " + urna.area.nombre + " " + urna.genero)
+
+                user, password, persona = crear_usuario_permiso_persona_urna(urna)
+
+                if Urna.objects.filter(elecciones=elecciones_activas, genero=urna.genero, area=urna.area).exists():
                     messages.error(self.request, 'Ya existe una urna de este tipo para estas elecciones.')
                     return redirect('crear_urna')
-
+                
+                urna.usuario = user
                 urna.save()
 
+                self.request.session['password'] = password
+
                 self.urna_id = urna.id
+
+                crear_votos_urna(urna, persona)
+
+                #transaction.set_rollback(True)
             
             messages.success(self.request, 'Urna creada correctamente.')
 
@@ -86,6 +90,21 @@ class crear_urna(FormView):
 
         return super().form_valid(form)
     
-    #def get_success_url(self):
-        #return reverse('tarjeta_urna.html', kwargs={'urna_id': self.urna_id})
+    def get_success_url(self):
+        return reverse('tarjeta_urna', kwargs={'urna_id': self.urna_id})
+
+# TARJETA DE DATOS DE PERSONA
+def tarjeta_urna(request, urna_id):
+
+    urna = get_object_or_404(Urna, id=urna_id)
+    password = request.session.get('password', None)
+    padron = urna.votos_urna.all().order_by('persona__apellido')
+
+    context = {
+        'urna': urna,
+        'password': password,
+        'padron': padron
+    }
+
+    return render(request, "tarjeta_urna.html", context)
     

@@ -25,7 +25,7 @@ class Persona(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='persona')
     clave_temporal = models.BooleanField(default=True)
 
-class Permiso(models.Model):
+class Permiso(models.Model): 
     nombre = models.CharField(max_length=255)
 
 class Permiso_Usuario(models.Model):

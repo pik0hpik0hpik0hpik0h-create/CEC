@@ -69,7 +69,7 @@ class Candidato_Materiales(models.Model):
     elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_elecciones')
 
 class Voto(models.Model):
-    urna = models.ForeignKey(Urna, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_urna')
+    urna = models.ForeignKey(Urna, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_urna')
     persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_persona')
     permitido = models.BooleanField(default=False)
     completo = models.BooleanField(default=False)
