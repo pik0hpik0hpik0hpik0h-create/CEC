@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from datetime import date
 from .models import Area, Persona
@@ -71,9 +72,25 @@ class form_editar_perfil(forms.ModelForm):
         },
         widget=forms.FileInput(attrs={
             'class': 'text-base-content/50 bg-neutral-content rounded-lg text-xs font-montserrat font-medium file-input file-input-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50 w-full',
-            'accept': 'image/*',
+            'accept': 'image/jpeg,image/png,image/webp',
         })
     )
+
+    def clean_foto(self):
+
+        foto = self.cleaned_data.get('foto')
+
+        if foto:
+            if foto.size > 2 * 1024 * 1024:
+                raise ValidationError("La imagen no debe superar los 2 MB.")
+
+            if foto.content_type not in ['image/jpeg', 'image/png', 'image/webp']:
+                raise ValidationError("Formato de imagen no permitido.")
+            
+            if foto.name.lower().endswith('.svg'):
+                raise ValidationError("SVG no permitido.")
+
+        return foto
  
     fecha_nacimiento = forms.DateField(
         input_formats=['%d-%m-%Y'],

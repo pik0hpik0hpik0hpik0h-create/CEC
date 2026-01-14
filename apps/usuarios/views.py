@@ -10,9 +10,9 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import FormView
 import io
 from apps.usuarios.forms import form_login, form_registrar_usuario, form_registrar_usuario_csv, form_nueva_clave, form_editar_perfil
-from core.funciones_generales.utils import ahora
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv
 from apps.usuarios.utils import crear_usuario
+from core.funciones_generales.utils import ahora
 from .models import Area, Persona
 
 # LOGIN

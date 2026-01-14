@@ -20,7 +20,7 @@ class Persona(models.Model):
     apellido = models.CharField(max_length=255)
     genero = models.CharField(max_length=1, choices=GENERO)
     fecha_nacimiento = models.DateField(null=True, blank=True)
-    foto = CloudinaryField('foto', default='DEFAULT_PROFILE_PIC_aszqw2', folder='cec/perfiles')
+    foto = CloudinaryField('foto', default='DEFAULT_PROFILE_PIC_aszqw2', folder='cec/perfiles', transformation=[{'width': 500, 'height': 500, 'crop': 'limit'}])
     area = models.ForeignKey(Area, on_delete=models.PROTECT, null=True, blank=True, related_name='personas')
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='persona')
     clave_temporal = models.BooleanField(default=True)
