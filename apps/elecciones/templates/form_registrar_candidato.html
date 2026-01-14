@@ -11,6 +11,76 @@
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
 </head>
 
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my_modal_7" class="modal-toggle" />
+
+<div class="modal" role="dialog">
+
+    <div class="modal-box max-w-200">
+
+        <h3 class="font-montserrat text-lg font-bold text-center">Candidatos a Jefe de Campamento</h3>
+
+            {% if candidatos_jefe %}
+                <div class="flex flex-wrap justify-between items-center mx-20 my-10 gap-7">
+                {% for jcm in candidatos_jefe %}
+                        <div class="avatar flex flex-col items-center justify-between">
+                            <div class="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+                                <img src="{{ jcm.persona.foto.url }}" />
+                            </div>
+                            <p class="text-xs mt-3 break-all">{{ jcm.persona }}</p>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+
+                <p class="font-montserrat text-warning text-sm text-center my-10">No hay candidatas a jefes de campamento registrados</p>
+
+            {% endif %}
+
+        <h3 class="font-montserrat text-lg font-bold text-center">Candidatas a Jefa de Campamento</h3>
+
+            {% if candidatos_jefa %}
+                <div class="flex flex-wrap justify-between items-center mx-20 my-10 gap-7">
+                {% for jcf in candidatos_jefa %}
+                    <div class="avatar flex flex-col items-center justify-between">
+                        <div class="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+                            <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                        </div>
+                        <p class="text-xs mt-3 break-all">Luis Pico</p>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+
+            <p class="font-montserrat text-warning text-sm text-center my-10">No hay candidatas a jefas de campamento registradas</p>
+
+            {% endif %}
+
+        <h3 class="font-montserrat text-lg font-bold text-center">Candidatos a Jefe de Materiales</h3>
+
+            {% if candidatos_mats %}
+                <div class="flex flex-wrap justify-between items-center mx-20 my-10 gap-7">
+                {% for jm in candidatos_mats %}
+                    <div class="avatar flex flex-col items-center justify-between">
+                        <div class="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+                            <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                        </div>
+                        <p class="text-xs mt-3 break-all">Luis Pico</p>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+
+            <p class="font-montserrat text-warning text-sm text-center my-10">No hay candidatos a jefes de materiales registrados</p>
+
+            {% endif %}
+
+    </div>
+
+    <label class="modal-backdrop" for="my_modal_7">Cerrar</label>
+
+</div>
+
 <body class="bg-base-300 min-h-screen font-montserrat">
 
     <div class="drawer lg:drawer-open">
@@ -68,9 +138,9 @@
             <div class="flex flex-col items-center justify-center">
 
                 <ul class="steps m-10 mb-5 text-sm">
-                    <li class="step step-info">Crear elecciones</li>
-                    <li class="step step-info">Crear urnas</li>
-                    <a href=" " class="step step-info"><li>Registrar candidatos</li></a>
+                    <a href="{% url 'crear_primera_vuelta' %}" class="step step-info"><li >Crear elecciones</li></a>
+                    <a href="{% url 'crear_urna' %}" class="step step-info"><li >Crear urnas</li></a>
+                    <a href="{% url 'registrar_candidato' %}" class="step step-info"><li>Registrar candidatos</li></a>
                 </ul>
 
                 <div class="tooltip tooltip-bottom text-xs" data-tip="Debe especificar para cada candidato su cargo, hazlo tantas veces como candidatos existan, la plataforma ya sabe cuales son las elecciones correspondientes. Al finalizar, podrás ver el aspecto de la papeleta virtual.">
@@ -119,7 +189,8 @@
                     </div>
 
                     <button type="submit" class="rounded-lg btn border-0 w-full mt-9 mb-0 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Registrar Candidato</button>
-                    <a class="rounded-lg btn border-0 w-full mt-2 mb-0 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Ver Papeleta</a>
+                    <label for="my_modal_7" class="rounded-lg btn border-0 w-full mt-2 mb-0 items-center bg-primary/80 text-primary-content hover:bg-primary/90 active:bg-primary">Ver Papeleta</label>
+                    <a href="#" class="rounded-lg btn border-0 w-full mt-2 mb-0 items-center bg-info/80 text-info-content hover:bg-info/90 active:bg-info">Empezar Elecciones</a>
 
                     <div>
                         {% for error in form.non_field_errors %}

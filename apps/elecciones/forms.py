@@ -77,11 +77,7 @@ class form_crear_urna(forms.ModelForm):
     )
 
 # REGISTRAR CANDIDATOS
-class form_registrar_candidato(forms.ModelForm):
-
-    class Meta:
-        model = Candidato
-        fields = ['persona', 'elecciones', 'tipo']
+class form_registrar_candidato(forms.Form):
     
     #ELECCIONES
     elecciones = forms.ModelChoiceField(

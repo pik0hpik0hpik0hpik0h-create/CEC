@@ -68,9 +68,9 @@
             <div class="flex flex-col items-center justify-center">
 
                 <ul class="steps m-10 mb-5 text-sm">
-                    <li class="step step-info">Crear elecciones</li>
-                    <li class="step">Crear urnas</li>
-                    <li class="step">Registrar candidatos</li>
+                    <a href="{% url 'crear_primera_vuelta' %}" class="step step-info"><li >Crear elecciones</li></a>
+                    <a href="{% url 'crear_urna' %}" class="step"><li >Crear urnas</li></a>
+                    <a href="{% url 'registrar_candidato' %}" class="step"><li>Registrar candidatos</li></a>
                 </ul>
 
                 <div class="tooltip tooltip-bottom text-xs" data-tip="El primer número representa el año, el segundo el periodo, si eliges 2026 - P1, se crearán las elecciones del primer periodo de 2026. La plataforma ya sabe cual es el periodo actual.">

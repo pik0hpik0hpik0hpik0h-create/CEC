@@ -66,10 +66,10 @@
 
             <div class="flex flex-col items-center justify-center">
 
-                <ul class="print:hidden steps m-10 mb-5 text-sm">
-                    <li class="step step-info">Crear elecciones</li>
-                    <li class="step step-info">Crear urnas</li>
-                    <li class="step">Registrar candidatos</li>
+                <ul class="steps m-10 mb-5 text-sm print:hidden">
+                    <a href="{% url 'crear_primera_vuelta' %}" class="step step-info"><li >Crear elecciones</li></a>
+                    <a href="{% url 'crear_urna' %}" class="step step-info"><li >Crear urnas</li></a>
+                    <a href="{% url 'registrar_candidato' %}" class="step"><li>Registrar candidatos</li></a>
                 </ul>
 
                 <h1 class="font-montserrat text-center font-black text-2xl text-black hidden print:block mt-10">TARJETA DE URNA</h1>
@@ -82,6 +82,7 @@
 
                     <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Área: <span class="font-light">{{ urna.area }}</span></p>
                     <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Género: <span class="font-light">{{ urna.get_genero_display }}</span></p>
+                    <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Número de Votantes: <span class="font-light">{{ numero_votantes }}</span></p>
                     <p class="font-montserrat text-sm print:text-2xl print:text-black font-medium">Usuario: <span class="font-light">{{ urna.usuario.username }}</span></p>
 
                     {% if password %}

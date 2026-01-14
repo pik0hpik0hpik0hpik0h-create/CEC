@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
 from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato
-from .models import Periodo, Elecciones, Urna
+from .models import Periodo, Elecciones, Urna, Candidato
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
 @login_required
@@ -106,11 +106,13 @@ def tarjeta_urna(request, urna_id):
     urna = get_object_or_404(Urna, id=urna_id)
     password = request.session.pop('password', None)
     padron = urna.votos_urna.all().order_by('persona__apellido')
+    numero_votantes = padron.count()
 
     context = {
         'urna': urna,
         'password': password,
-        'padron': padron 
+        'padron': padron,
+        'numero_votantes': numero_votantes
     }
 
     return render(request, "tarjeta_urna.html", context)
@@ -123,14 +125,35 @@ class registrar_candidato(LoginRequiredMixin,FormView):
     template_name = 'form_registrar_candidato.html'
     success_url = reverse_lazy('registrar_candidato')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        elecciones_activas = Elecciones.objects.filter(activas=True).first()
+        context['elecciones_activas'] = elecciones_activas
+        context['candidatos_jefe'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JCM')
+        context['candidatos_jefa'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JCF')
+        context['candidatos_mats'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JM')
+        return context
+
     def form_valid(self, form):
 
         try:
             with transaction.atomic():
 
-                form.save(commit=False)
-            
-            messages.success(self.request, 'Candidato registrado correctamente.')
+                candidatos = form.cleaned_data['persona']
+
+                for candidato in candidatos:
+
+                    nuevo_candidato, created = Candidato.objects.get_or_create(
+                        persona=candidato,
+                        tipo=form.cleaned_data['tipo'],
+                        elecciones=form.cleaned_data['elecciones']
+                    )
+
+                    if not created:
+                        messages.error(self.request, f'{nuevo_candidato.persona.nombre} ya es candidato(a).')
+
+            messages.success(self.request, 'Candidato(s) registrado(s) correctamente.')
 
         except Exception as e:
             form.add_error(None, f'Ocurrió un error al registrar al candidato. {e}')
