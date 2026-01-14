@@ -36,9 +36,9 @@ if ENVIRONMENT == 'development':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cec-nx49.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cec-oa8q.onrender.com']
 
-CSRF_TRUSTED_ORIGINS = [ 'https://cec-nx49.onrender.com' ]
+CSRF_TRUSTED_ORIGINS = [ 'https://cec-oa8q.onrender.com' ]
 
 INTERNAL_IPS = (
     '127.0.0.1',
