@@ -77,18 +77,23 @@ class form_editar_perfil(forms.ModelForm):
     )
 
     def clean_foto(self):
-
         foto = self.cleaned_data.get('foto')
 
         if foto:
-            if foto.size > 2 * 1024 * 1024:
-                raise ValidationError("La imagen no debe superar los 2 MB.")
-
-            if foto.content_type not in ['image/jpeg', 'image/png', 'image/webp']:
-                raise ValidationError("Formato de imagen no permitido.")
             
-            if foto.name.lower().endswith('.svg'):
-                raise ValidationError("SVG no permitido.")
+            if hasattr(foto, "size"):
+                if foto.size > 2 * 1024 * 1024:
+                    raise ValidationError("La imagen no debe superar los 2 MB.")
+
+           
+            if hasattr(foto, "content_type"):
+                if foto.content_type not in ['image/jpeg', 'image/png', 'image/webp']:
+                    raise ValidationError("Formato de imagen no permitido.")
+
+          
+            if hasattr(foto, "name"):
+                if foto.name.lower().endswith('.svg'):
+                    raise ValidationError("SVG no permitido.")
 
         return foto
  
