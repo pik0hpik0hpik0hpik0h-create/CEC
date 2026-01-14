@@ -82,8 +82,8 @@ class form_editar_perfil(forms.ModelForm):
         if foto:
             
             if hasattr(foto, "size"):
-                if foto.size > 2 * 1024 * 1024:
-                    raise ValidationError("La imagen no debe superar los 2 MB.")
+                if foto.size > 5 * 1024 * 1024:
+                    raise ValidationError("La imagen no debe superar los 5 MB.")
 
            
             if hasattr(foto, "content_type"):
