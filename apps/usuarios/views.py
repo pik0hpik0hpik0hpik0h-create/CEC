@@ -35,6 +35,7 @@ def ingresar_nueva_clave(request):
             persona = request.user.persona
             persona.clave_temporal = False
             persona.save()
+            persona.refresh_from_db()
 
             update_session_auth_hash(request, request.user)
 

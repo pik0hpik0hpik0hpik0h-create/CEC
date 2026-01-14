@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import reverse
+from apps.usuarios.models import Persona
 
 class forza_cambio_clave_middleware:
 
@@ -9,9 +10,11 @@ class forza_cambio_clave_middleware:
     def __call__(self, request):
 
         if request.user.is_authenticated:
-            persona = getattr(request.user, 'persona', None)
+            clave_temporal = Persona.objects.filter(
+                user=request.user
+            ).values_list('clave_temporal', flat=True).first()
 
-            if persona and persona.clave_temporal:
+            if clave_temporal:
                 rutas_permitidas = [
                     reverse('ingresar_nueva_clave'),
                     reverse('logout'),
