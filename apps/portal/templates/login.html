@@ -6,7 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
+    {% if debug %}
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'css/output.min.css' %}">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
     <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
 </head>

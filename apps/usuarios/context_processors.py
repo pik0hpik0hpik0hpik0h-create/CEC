@@ -1,4 +1,10 @@
+from django.conf import settings
 from .models import Persona
+
+def debug_status(request):
+    return {
+        'debug': settings.DEBUG
+    }
 
 def usuario_actual(request):
     if request.user.is_authenticated:

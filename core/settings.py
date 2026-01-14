@@ -11,24 +11,37 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import environ
 import os
+from environ import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
+ENVIRONMENT = env('ENVIRONMENT', default="production").strip()
+
+ENVIRONMENT = 'production'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-aifvl8x8-qz&9tox#=i#cr0_@xq6qrd76+v-a*&7ag@dxep5q!'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if ENVIRONMENT == 'development':    
+    DEBUG = True
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost:8000',
+)
 
 # Application definition
 
@@ -55,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'apps.usuarios.middleware.forza_cambio_clave_middleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -71,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.usuarios.context_processors.usuario_actual',
                 'apps.usuarios.context_processors.permisos_context',
+                'apps.usuarios.context_processors.debug_status',
             ],
         },
     },
@@ -81,16 +96,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-env = environ.Env(DEBUG=(bool, False))
-
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
-DEBUG = env("DEBUG")
-
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
 DATABASES = {
     "default": env.db("DATABASE_URL")
@@ -137,11 +142,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (Cloudinary)
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -160,3 +165,7 @@ CSRF_COOKIE_HTTPONLY = True
 
 SESSION_COOKIE_AGE = 15 * 60 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+print("ENVIRONMENT:", ENVIRONMENT)
+print("DEBUG:", DEBUG)

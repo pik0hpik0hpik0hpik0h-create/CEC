@@ -9,8 +9,10 @@
     "daisyui": "^5.5.14"
   },
   "scripts": {
-    "dev": "npx tailwindcss -i ./src/input.css -o ./static/css/output.css --watch",
+    "tailwind": "npx tailwindcss -i ./src/input.css -o ./static/css/output.css --watch",
     "server": "python manage.py runserver",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "concurrently \"npm run tailwind\" \"npm run server\"",
+
+    "minify": "npx tailwindcss -i ./src/input.css -o ./static/css/output.min.css --minify"
   }
 }
