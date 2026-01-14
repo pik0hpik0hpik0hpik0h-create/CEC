@@ -1,0 +1,115 @@
+/* Tema oscuro para logo del CEC en el header */
+[data-theme="cec-oscuro"] #logo_cec {
+    filter: invert(0.9);
+}
+
+@media print {
+    [data-theme="cec-oscuro"] #logo_cec {
+        filter: none !important;
+    }
+}
+
+/* Quitar datos de impresión */
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+    }
+}
+
+/* Focus para inputs de forms */
+.form-accent:focus,
+.form-accent:focus-within {
+  --input-color: #ffb800; 
+}
+
+/* Para que los selects no tengan borde gordo al focus */
+.select:focus,
+.select:focus-within {
+    outline: none !important;       
+    box-shadow: 0 0 0 0.5px #ffb800 !important;   
+}
+
+/* Primer item de select como placeholder de color específico */
+.custom-select:invalid {
+    color: #05091080; 
+}
+[data-theme="cec-oscuro"] .custom-select:invalid {
+    color: #ecfff980; 
+}
+
+.custom-select option {
+    color: #050910; 
+}
+[data-theme="cec-oscuro"] .custom-select option {
+    color: #ecfff9; 
+}
+
+.custom-select option[value=""] {
+    color: #05091080;
+}
+[data-theme="cec-oscuro"] .custom-select option[value=""] {
+    color: #ecfff980;
+}
+
+/* Texto más pequeño y padding para tooltips */
+.tooltip > .tooltip-content,
+.tooltip[data-tip]:before {
+    font-size: 0.75rem !important;       
+    padding-inline: 1rem !important;   
+    padding-block: 0.5rem !important;   
+}
+
+
+/* Color de steps no completados */
+.steps .step:not(.step-info) {
+  --step-bg: #fcffff;  
+  --step-fg: #050910;  
+}
+
+[data-theme="cec-oscuro"] .steps .step:not(.step-info) {
+  --step-bg: #1a1f30;  
+  --step-fg: #ecfff9;  
+}
+
+/* Fondo animado para login */
+.bg-animado-login {background: radial-gradient(100% 100% at var(--10-x-position) var(--10-y-position), #001299 -32%, transparent),radial-gradient(100% 100% at var(--11-x-position) var(--11-y-position), #a8e9ff 28%, transparent),radial-gradient(100% 100% at var(--12-x-position) var(--12-y-position), #d15400 -84%, transparent),radial-gradient(100% 100% at var(--13-x-position) var(--13-y-position), #ffed75 -100%, transparent),#ffffff;animation-name: main; animation-iteration-count: infinite; animation-duration: 20s; transition-timing-function: ease-in;}@property --10-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 99.0234375%;
+      }@property --10-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 0%;
+        }@property --11-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 13.789062500000004%;
+      }@property --11-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 12.812500000000004%;
+        }@property --12-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 94.140625%;
+      }@property --12-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 63.59375000000001%;
+        }@property --13-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 68.0859375%;
+      }@property --13-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 89.921875%;
+        }:root {--6-x-position: 99.0234375%;--6-y-position: 0%;--7-x-position: 13.789062500000004%;--7-y-position: 12.812500000000004%;--8-x-position: 94.140625%;--8-y-position: 63.59375000000001%;--9-x-position: 68.0859375%;--9-y-position: 89.921875%;--10-x-position: 99.0234375%;--10-y-position: 0%;--11-x-position: 13.789062500000004%;--11-y-position: 12.812500000000004%;--12-x-position: 94.140625%;--12-y-position: 63.59375000000001%;--13-x-position: 68.0859375%;--13-y-position: 89.921875%;}
+    @keyframes main {
+      25% {--10-x-position: 15%;--10-y-position: 15%;--13-x-position: 85%;--13-y-position: 80%;}50% {--10-x-position: 80%;--10-y-position: 15%;--11-x-position: 20%;--11-y-position: 20%;--12-x-position: 20%;--12-y-position: 20%;--13-x-position: 15%;--13-y-position: 85%;}
+    }
+    
