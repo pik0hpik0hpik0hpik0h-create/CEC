@@ -11,7 +11,7 @@ class forza_cambio_clave_middleware:
 
         if request.user.is_authenticated:
             clave_temporal = Persona.objects.filter(
-                user=request.user
+                usuario=request.user
             ).values_list('clave_temporal', flat=True).first()
 
             if clave_temporal:
