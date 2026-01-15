@@ -112,4 +112,34 @@
     @keyframes main {
       25% {--10-x-position: 15%;--10-y-position: 15%;--13-x-position: 85%;--13-y-position: 80%;}50% {--10-x-position: 80%;--10-y-position: 15%;--11-x-position: 20%;--11-y-position: 20%;--12-x-position: 20%;--12-y-position: 20%;--13-x-position: 15%;--13-y-position: 85%;}
     }
+
+.bg-animado-votar {background: radial-gradient(100% 100% at var(--7-x-position) var(--7-y-position), #fcffeb -19%, transparent),radial-gradient(100% 100% at var(--8-x-position) var(--8-y-position), #eb0000 -9%, transparent),radial-gradient(100% 100% at var(--9-x-position) var(--9-y-position), #ffbb00 36%, transparent),#b87400;animation-name: main; animation-iteration-count: infinite; animation-duration: 20s; transition-timing-function: ease-in;}@property --7-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 20%;
+      }@property --7-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 80%;
+        }@property --8-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 80%;
+      }@property --8-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 20%;
+        }@property --9-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 80%;
+      }@property --9-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 80%;
+        }:root {--4-x-position: 20%;--4-y-position: 80%;--5-x-position: 80%;--5-y-position: 20%;--7-x-position: 20%;--7-y-position: 80%;--8-x-position: 80%;--8-y-position: 20%;--9-x-position: 80%;--9-y-position: 80%;}
+    @keyframes main {
+      25% {--7-x-position: 15%;--7-y-position: 15%;--8-x-position: 85%;--8-y-position: 80%;}50% {--7-x-position: 80%;--7-y-position: 15%;--8-x-position: 15%;--8-y-position: 85%;--9-x-position: 20%;--9-y-position: 20%;}
+    }
+    
     

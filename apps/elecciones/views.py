@@ -242,7 +242,7 @@ def permitir_voto(request, voto_id):
 
     urna = request.user.urna_usuario
     votos = urna.votos_urna.all()
-    print(votos.count())
+    
     for v in votos:
         v.permitido = False
         v.save()
@@ -252,5 +252,57 @@ def permitir_voto(request, voto_id):
     voto.save()
 
     return redirect('autorizar_voto')
+
+# VOTO PERMITIDO ACTUAL
+@login_required
+@permiso_required('urna')
+def voto_permitido_actual(request):
+
+    urna = request.user.urna_usuario
+    voto_permitido_actual = urna.votos_urna.filter(permitido=True).first()
+
+    if not voto_permitido_actual:
+        messages.error(request, 'Aún no se ha autorizado ningún voto en esta urna.')
+        return redirect('listo_para_votar')
+    else:
+        print(voto_permitido_actual.id)
+        return redirect('votar', voto_id=voto_permitido_actual.id)
+    
+# LISTO PARA VOTAR?
+@login_required
+@permiso_required('urna')
+def listo_para_votar(request):
+
+    return render(request, 'listo_para_votar.html')
+
+# VOTAR
+@login_required
+@permiso_required('urna')
+def votar(request, voto_id):
+
+    user = request.user
+
+    voto = get_object_or_404(Voto, id=voto_id)
+
+    print(voto.urna.usuario)
+    print(user)
+
+    if voto.urna.usuario != user:
+        messages.error(request, 'Este voto no corresponde a esta urna.')
+        return redirect('listo_para_votar')
+
+    if voto.completo:
+        messages.error(request, f'{voto.persona} ya votó.')
+        return redirect('listo_para_votar')
+
+    if not voto.permitido:
+        messages.error(request, f'{voto.persona} aún no puede votar.')
+        return redirect('listo_para_votar')
+    
+    context = {
+        'voto': voto,
+    }
+
+    return render(request, 'votar.html', context)
 
 
