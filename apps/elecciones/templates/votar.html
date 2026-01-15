@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="cec-claro" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voto de {{ voto.persona }}</title>
+    {% if debug %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'css/output.min.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
+    <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
+</head>
+
+<body class="bg-animado-votar min-h-screen">
+
+    {% for message in messages %}
+
+        {% if message.tags == 'success' %}
+            <div role="alert" class="fixed bottom-5 z-50 alert alert-success transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+        {% endif %}
+
+        {% if message.tags == 'error' %}
+            <div role="alert" class="fixed bottom-5 z-50 alert alert-error transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+
+    <div class="relative min-h-screen flex items-center justify-center">
+
+        <div class="absolute inset-0 bg-[url('/static/img/LOGINBG.png')] bg-cover bg-center opacity-10"></div>
+
+            <form method="post" novalidate class="relative bg-white/20 rounded-3xl w-auto h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+
+                {% if radios_jefe %}
+
+                <label class="font-montserrat text-sm font-light">Jefe de Campamento</label>
+
+                <div class="flex flex-wrap justify-center items-center mx-20 my-10 gap-8">
+
+                    {% for radio, candidato in radios_jefe %}
+                    <label class="cursor-pointer">
+
+                        <!-- Radio real -->
+                        {{ radio.tag }}
+
+                        <!-- Card -->
+                        <div class="
+                            avatar flex flex-col items-center justify-between w-32 p-3 rounded-2xl
+                            border border-accent/30
+                            transition-all duration-200
+                            hover:scale-105
+                            peer-checked:ring-4 peer-checked:ring-accent
+                            peer-checked:bg-accent/10
+                        ">
+
+                            <div class="ring-accent ring-offset-base-100 w-20 rounded-full ring-2 ring-offset-2">
+                                <img src="{{ candidato.persona.foto.url }}" />
+                            </div>
+
+                            <p title="{{ candidato.persona }}"
+                            class="text-xs mt-3 text-center truncate font-montserrat">
+                                {{ candidato.persona }}
+                            </p>
+
+                        </div>
+                    </label>
+                    {% endfor %}
+
+                </div>
+                {% else %}
+                <p class="font-montserrat text-warning text-sm text-center my-10">
+                    No hay candidatos a jefe de campamento registrados
+                </p>
+                {% endif %}
+
+            </form>
+
+    </div>
+
+</body>
+
+
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/alertas.js' %}"></script>
+
+</html>

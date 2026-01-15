@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
-from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados
+from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados, form_votar
 from .models import Periodo, Elecciones, Urna, Candidato, Voto
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
@@ -280,6 +280,8 @@ def listo_para_votar(request):
 @permiso_required('urna')
 def votar(request, voto_id):
 
+    form = form_votar(data=request.POST or None)
+
     user = request.user
 
     voto = get_object_or_404(Voto, id=voto_id)
@@ -299,8 +301,48 @@ def votar(request, voto_id):
         messages.error(request, f'{voto.persona} aún no puede votar.')
         return redirect('listo_para_votar')
     
+    elecciones = Elecciones.objects.filter(activas=True).first()
+
+    candidatos_jefe = Candidato.objects.filter(elecciones=elecciones, tipo='JCM').select_related('persona').only(
+        'persona__nombre',
+        'persona__apellido',
+        'persona__foto',
+    )
+
+    radios_jefe = zip(form['voto_jefe'], candidatos_jefe)
+
+
+    candidatas_jefa = Candidato.objects.filter(elecciones=elecciones, tipo='JCF').select_related('persona').only(
+        'persona__nombre',
+        'persona__apellido',
+        'persona__foto',
+    )
+
+    candidatos_mats = Candidato.objects.filter(elecciones=elecciones, tipo='JM').select_related('persona').only(
+        'persona__nombre',
+        'persona__apellido',
+        'persona__foto',
+    )
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+
+            voto = form.save(commit=False)  
+
+            voto.completo = True
+            voto.permitido = False
+            voto.save()
+
+            messages.success(request, 'Voto registrado correctamente')
+            return redirect('listo_para_votar')
+
     context = {
         'voto': voto,
+        'radios_jefe': radios_jefe,
+        'candidatas_jefa': candidatas_jefa,
+        'candidatos_mats': candidatos_mats,
+        'form': form
     }
 
     return render(request, 'votar.html', context)

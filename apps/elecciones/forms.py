@@ -1,6 +1,6 @@
 from django import forms
 from apps.usuarios.models import Area, Persona
-from .models import Elecciones, Periodo, Urna, Candidato
+from .models import Elecciones, Periodo, Urna, Voto, Candidato
 
 # CREAR PRIMERA VUELTA DE ELECCIONES
 class form_crear_primera_vuelta(forms.ModelForm):
@@ -144,3 +144,54 @@ class form_consultar_resultados(forms.Form):
         self.fields['elecciones'].queryset = Elecciones.objects.all()
         self.fields['elecciones'].initial = Elecciones.objects.filter(activas=True).first()
 
+# VOTAR
+class form_votar(forms.ModelForm):
+
+    class Meta:
+        model = Voto
+        fields = [
+            'voto_jefe',
+            'voto_jefa',
+            'voto_materiales',
+        ]
+
+    voto_jefe = forms.ModelChoiceField(
+        queryset=Candidato.objects.none(),
+        widget=forms.RadioSelect(attrs={
+            'class': 'radio radio-accent radio-xs hidden peer'
+        }),
+        required=False,
+        empty_label=None
+    )
+
+    voto_jefa = forms.ModelChoiceField(
+        queryset=Candidato.objects.none(),
+        widget=forms.RadioSelect(attrs={
+            'class': 'radio radio-accent radio-xs hidden peer'
+        }),
+        required=False,
+        empty_label=None
+    )
+
+    voto_materiales = forms.ModelChoiceField(
+        queryset=Candidato.objects.none(),
+        widget=forms.RadioSelect(attrs={
+            'class': 'radio radio-accent radio-xs hidden peer'
+        }),
+        required=False,
+        empty_label=None
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        elecciones_activas = Elecciones.objects.filter(activas=True).first()
+
+        if elecciones_activas:
+            candidatos = Candidato.objects.filter(
+                elecciones=elecciones_activas
+            ).select_related('persona')
+
+            self.fields['voto_jefe'].queryset = candidatos.filter(tipo='JCM')
+            self.fields['voto_jefa'].queryset = candidatos.filter(tipo='JCF')
+            self.fields['voto_materiales'].queryset = candidatos.filter(tipo='JM')
