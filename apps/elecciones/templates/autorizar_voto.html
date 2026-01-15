@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="cec-claro" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorizar Voto {{ urna.usuario.username }}</title>
+    {% if debug %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'css/output.min.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/detalles.css' %}">
+    <link rel="icon" href="{% static 'img/LOGO_ICONO.png' %}">
+</head>
+
+<body class="bg-base-300 min-h-screen font-montserrat">
+
+    <div class="drawer lg:drawer-open">
+        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+            <!-- Navbar -->
+            <nav class="print:hidden navbar w-full bg-base-200 flex items-center justify-between">
+            <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
+                <!-- Sidebar toggle icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
+            </label>
+
+            <div class="flex flex-wrap space-x-3 items-center">
+
+                <div class="text-xs">
+                    {{ usuario_nombre }}
+                </div>
+
+                <div class="avatar">
+
+                    <div class="w-7 rounded-full mr-2 ring-accent ring-2">
+                        <a href="{% url 'editar_perfil' %}"><img src="{{ usuario_foto }}" /></a>
+                    </div>
+
+                </div>
+
+            </div>
+            
+            </nav>
+            <!-- Page content here -->
+
+            {% for message in messages %}
+
+                {% if message.tags == 'success' %}
+                <div role="alert" class="fixed bottom-5 z-50 alert alert-success transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{ message }}</span>
+                </div>
+                {% endif %}
+
+                {% if message.tags == 'error' %}
+                <div role="alert" class="fixed bottom-5 z-50 alert alert-error transition-opacity duration-1000 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-5 lg:translate-x-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{ message }}</span>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+
+            <h1 class="font-montserrat text-center font-semibold mt-10">Padrón Electoral</h1>
+
+            <div class="overflow-x-auto m-5 mt-10">
+
+                <table class="table table-xs table-zebra">
+                    <thead>
+                        <tr class="bg-base-100">
+                            <th>Cédula</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th class="text-center">Área</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Autorizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for v in votos %}
+                        <tr>
+                            <td>{{ v.persona.cedula }}</td>
+                            <td>{{ v.persona.apellido }}</td>
+                            <td>{{ v.persona.nombre }}</td>
+                            <td class="text-center">{{ v.persona.area.nombre }}</td>
+
+                            {% if v.completo and not v.permitido %}
+                                <td class="text-center"><div aria-label="status" class="status status-lg status-primary"></div></td>
+                            {% elif not v.completo and v.permitido %}
+                                <td class="text-center"><div aria-label="status" class="status status-lg status-accent"></div></td>
+                            {% elif not v.completo and not v.permitido %}
+                                <td class="text-center"><div aria-label="status" class="status status-lg status-error"></div></td>
+                            {% else %}
+                                <td class="text-center"><div aria-label="status" class="status status-lg status-info"></div></td>
+                            {% endif %}
+
+                            {% if v.completo or v.permitido %}
+                                <td class="text-center">
+                                    <button disabled class="btn btn-xs">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512" stroke-width="2.5" stroke="currentColor" class="size-[1.2em]"><path stroke-linecap="round" stroke-linejoin="round" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>
+                                    </button>
+                                </td>
+                            {% else %}
+                                <td class="text-center">
+                                    <form method="post" action="{% url 'permitir_voto' v.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-xs btn-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512" stroke-width="2.5" stroke="currentColor" class="size-[1.2em]"><path stroke-linecap="round" stroke-linejoin="round" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>
+                                        </button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="print:hidden drawer-side is-drawer-close:overflow-visible">
+            <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+                <div class="flex min-h-full flex-col items-start bg-base-100 is-drawer-close:w-14 is-drawer-open:w-64">
+                <!-- Sidebar content here -->
+                <ul class="menu w-full grow">
+                    <!-- List item -->
+                    <li>
+                    <a href="{% url 'dashboard' %}" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Dashboard">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                        <span class="is-drawer-close:hidden">Dashboard</span>
+                    </a>
+                    </li>
+
+                    <li>
+                    <a href="{% url 'editar_perfil' %}" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Editar perfil">
+                        <!-- Settings icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="currentColor" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M505 122.9L517.1 135C526.5 144.4 526.5 159.6 517.1 168.9L488 198.1L441.9 152L471 122.9C480.4 113.5 495.6 113.5 504.9 122.9zM273.8 320.2L408 185.9L454.1 232L319.8 366.2C316.9 369.1 313.3 371.2 309.4 372.3L250.9 389L267.6 330.5C268.7 326.6 270.8 323 273.7 320.1zM437.1 89L239.8 286.2C231.1 294.9 224.8 305.6 221.5 317.3L192.9 417.3C190.5 425.7 192.8 434.7 199 440.9C205.2 447.1 214.2 449.4 222.6 447L322.6 418.4C334.4 415 345.1 408.7 353.7 400.1L551 202.9C579.1 174.8 579.1 129.2 551 101.1L538.9 89C510.8 60.9 465.2 60.9 437.1 89zM152 128C103.4 128 64 167.4 64 216L64 488C64 536.6 103.4 576 152 576L424 576C472.6 576 512 536.6 512 488L512 376C512 362.7 501.3 352 488 352C474.7 352 464 362.7 464 376L464 488C464 510.1 446.1 528 424 528L152 528C129.9 528 112 510.1 112 488L112 216C112 193.9 129.9 176 152 176L264 176C277.3 176 288 165.3 288 152C288 138.7 277.3 128 264 128L152 128z"/></svg>
+                        <span class="is-drawer-close:hidden">Editar perfil</span>
+                    </a>
+                    </li>
+
+                    <!-- List item -->
+                    <li>
+                    <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Tema">
+                        <!-- Settings icon -->
+
+                        <label class="swap swap-rotate cursor-pointer">
+
+                            <input type="checkbox" id="cambio_tema" />
+
+                            <!-- CLARO -->
+                            <svg class="swap-on size-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,                
+                                1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,
+                                17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,
+                                2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,
+                                1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,
+                                7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,
+                                1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,
+                                6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,
+                                1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,
+                                1.41A1,1,0,0,0,17.66,7.34ZM21,
+                                11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,
+                                8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,
+                                1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,
+                                18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,
+                                0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,
+                                12,5.51,5.51,0,0,0,12,6.5Zm0,
+                                9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,
+                                12,15.5Z" />
+                            </svg>
+
+                            <!-- OSCURO -->
+                            <svg class="swap-off size-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="none" stroke="currentColor" stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+
+                        </label>
+
+                        <label for="cambio_tema" class="cursor-pointer is-drawer-close:hidden">
+                            Tema
+                        </label>
+                </button>
+                </li>
+
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Salir">
+                            <!-- Settings icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path fill="#ff5739" d="M224 160C241.7 160 256 145.7 256 128C256 110.3 241.7 96 224 96L160 96C107 96 64 139 64 192L64 448C64 501 107 544 160 544L224 544C241.7 544 256 529.7 256 512C256 494.3 241.7 480 224 480L160 480C142.3 480 128 465.7 128 448L128 192C128 174.3 142.3 160 160 160L224 160zM566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L438.6 169.3C426.1 156.8 405.8 156.8 393.3 169.3C380.8 181.8 380.8 202.1 393.3 214.6L466.7 288L256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L466.7 352L393.3 425.4C380.8 437.9 380.8 458.2 393.3 470.7C405.8 483.2 426.1 483.2 438.6 470.7L566.6 342.7z"/></svg>
+                            <span class="is-drawer-close:hidden text-error">Salir</span>
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/alertas.js' %}"></script>
+
+</html>

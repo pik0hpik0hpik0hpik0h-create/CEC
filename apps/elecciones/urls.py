@@ -10,4 +10,6 @@ urlpatterns = [
     path("registrar/candidato/", views.registrar_candidato.as_view(), name="registrar_candidato"),
     path("resultados/", views.consultar_resultados.as_view(), name="consultar_resultados"),
     path("resultados/reporte/<int:elecciones_id>/", views.reporte_elecciones, name="reporte_elecciones"),
+    path("autorizar_voto/", views.autorizar_voto, name="autorizar_voto"),
+    path("permitir_voto/<int:voto_id>/", views.permitir_voto, name="permitir_voto"),
 ]

@@ -210,3 +210,47 @@ def reporte_elecciones(request, elecciones_id):
     }
 
     return render(request, "reporte_elecciones.html", context)
+
+# REPORTE DE RESULTADOS
+@login_required
+@permiso_required('urna')
+def autorizar_voto(request):
+
+    urna = request.user.urna_usuario
+
+    votos = urna.votos_urna.select_related('persona').only(
+        'persona__id',
+        'persona__cedula',
+        'persona__nombre',
+        'persona__apellido',
+        'persona__area__nombre',
+        'permitido',
+        'completo'
+    ).order_by('persona__apellido')
+
+    context = {
+        'urna': urna,
+        'votos': votos
+    }
+
+    return render(request, "autorizar_voto.html", context)
+
+# PERMITIR VOTO
+@login_required
+@permiso_required('urna')
+def permitir_voto(request, voto_id):
+
+    urna = request.user.urna_usuario
+    votos = urna.votos_urna.all()
+    print(votos.count())
+    for v in votos:
+        v.permitido = False
+        v.save()
+
+    voto = get_object_or_404(Voto, id=voto_id)
+    voto.permitido = True
+    voto.save()
+
+    return redirect('autorizar_voto')
+
+
