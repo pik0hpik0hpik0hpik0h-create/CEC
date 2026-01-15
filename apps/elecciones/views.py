@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Count, Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,8 +7,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
-from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato
-from .models import Periodo, Elecciones, Urna, Candidato
+from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados
+from .models import Periodo, Elecciones, Urna, Candidato, Voto
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
 @login_required
@@ -131,7 +132,7 @@ class registrar_candidato(LoginRequiredMixin,FormView):
         elecciones_activas = Elecciones.objects.filter(activas=True).first()
         context['elecciones_activas'] = elecciones_activas
         context['candidatos_jefe'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JCM')
-        context['candidatos_jefa'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JCF')
+        context['candidatas_jefa'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JCF')
         context['candidatos_mats'] = Candidato.objects.filter(elecciones=elecciones_activas, tipo='JM')
         return context
 
@@ -140,7 +141,7 @@ class registrar_candidato(LoginRequiredMixin,FormView):
         try:
             with transaction.atomic():
 
-                candidatos = form.cleaned_data['persona']
+                candidatos = form.cleaned_data['persona'] 
 
                 for candidato in candidatos:
 
@@ -161,4 +162,51 @@ class registrar_candidato(LoginRequiredMixin,FormView):
 
         return super().form_valid(form)
     
+# VER RESULTADOS
+@permiso_required_cbv('admin', 'director', 'secretaria')
+class consultar_resultados(LoginRequiredMixin, FormView):
+
+    form_class = form_consultar_resultados
+    template_name = 'form_consultar_resultados.html'
+
+    def form_valid(self, form):
+        elecciones = form.cleaned_data['elecciones']
+        return redirect('reporte_elecciones', elecciones_id=elecciones.id)
     
+# REPORTE DE RESULTADOS
+@login_required
+@permiso_required('admin', 'director', 'secretaria')
+def reporte_elecciones(request, elecciones_id):
+
+    elecciones = get_object_or_404(Elecciones, id=elecciones_id)
+
+    votantes = Voto.objects.filter(urna__elecciones=elecciones).count()
+
+    sufragios = Voto.objects.filter(completo=True).count()
+
+    candidatos_jefe = Candidato.objects.filter(elecciones=elecciones, tipo='JCM')
+
+    for jcm in candidatos_jefe:
+        jcm.votos = Voto.objects.filter(voto_jefe=jcm, urna__elecciones=elecciones).count()
+
+    candidatas_jefa = Candidato.objects.filter(elecciones=elecciones, tipo='JCF')
+
+    for jcf in candidatas_jefa:
+        jcf.votos = Voto.objects.filter(voto_jefa=jcf, urna__elecciones=elecciones).count()
+
+    candidatos_mats = Candidato.objects.filter(elecciones=elecciones, tipo='JM')
+
+    for jm in candidatos_mats:
+        jm.votos = Voto.objects.filter(voto_materiales=jm, urna__elecciones=elecciones).count()
+    
+    context = {
+        'elecciones': elecciones,
+        'votantes': votantes,
+        'sufragios': sufragios,
+
+        'candidatos_jefe': candidatos_jefe,
+        'candidatas_jefa': candidatas_jefa,
+        'candidatos_mats': candidatos_mats
+    }
+
+    return render(request, "reporte_elecciones.html", context)

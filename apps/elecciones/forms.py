@@ -124,3 +124,23 @@ class form_registrar_candidato(forms.Form):
         }
     )
 
+# VER RESULTADOS
+class form_consultar_resultados(forms.Form):
+    
+    #ELECCIONES
+    elecciones = forms.ModelChoiceField(
+        queryset=Elecciones.objects.none(),
+        empty_label=None,
+        error_messages={
+            'required': 'Por favor, seleccione unas elecciones.',
+        },
+        widget=forms.Select(attrs={
+            'class': 'custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['elecciones'].queryset = Elecciones.objects.all()
+        self.fields['elecciones'].initial = Elecciones.objects.filter(activas=True).first()
+

@@ -7,5 +7,7 @@ urlpatterns = [
     path("crear/primera_vuelta", views.crear_primera_vuelta.as_view(), name="crear_primera_vuelta"),
     path("crear/urna", views.crear_urna.as_view(), name="crear_urna"),  
     path("crear/urna/tarjeta/<int:urna_id>/", views.tarjeta_urna, name="tarjeta_urna"),  
-    path("registrar/candidato/", views.registrar_candidato.as_view(), name="registrar_candidato")
+    path("registrar/candidato/", views.registrar_candidato.as_view(), name="registrar_candidato"),
+    path("resultados/", views.consultar_resultados.as_view(), name="consultar_resultados"),
+    path("resultados/reporte/<int:elecciones_id>/", views.reporte_elecciones, name="reporte_elecciones"),
 ]
