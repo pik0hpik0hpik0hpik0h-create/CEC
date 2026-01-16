@@ -15,4 +15,5 @@ urlpatterns = [
     path("voto_permitido_actual/", views.voto_permitido_actual, name="voto_permitido_actual"),
     path("listo/", views.listo_para_votar, name="listo_para_votar"),
     path("votar/<int:voto_id>/", views.votar, name="votar"),
+    path("crear/segunda_vuelta", views.crear_segunda_vuelta.as_view(), name="crear_segunda_vuelta"),
 ]

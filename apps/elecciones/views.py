@@ -7,9 +7,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
-from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados, form_votar
+from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados, form_votar, form_crear_segunda_vuelta
 from .models import Periodo, Elecciones, Urna, Candidato, Voto, Sufragio
-from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
+from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna, crear_urnas_segunda_vuelta
 
 @login_required
 def dashboard_elecciones(request):
@@ -395,5 +395,47 @@ def votar(request, voto_id):
     }
 
     return render(request, 'votar.html', context)
+
+# CREAR SEGUNDA VUELTA
+@permiso_required_cbv('admin', 'elecciones')
+class crear_segunda_vuelta(LoginRequiredMixin,FormView):
+    
+    form_class = form_crear_segunda_vuelta
+    template_name = 'form_crear_segunda_vuelta.html'
+    success_url = reverse_lazy('registrar_candidato')
+
+    def form_valid(self, form):
+
+        try:
+            with transaction.atomic():
+
+                elecciones_primera_vuelta = form.cleaned_data['elecciones']
+                
+                elecciones_primera_vuelta.activas=False
+
+                if Elecciones.objects.filter(periodo=elecciones_primera_vuelta.periodo, tipo=2).exists():
+                    messages.error(self.request, 'Ya existe segunda vuelta para este periodo.')
+                    return redirect('crear_segunda_vuelta')
+                
+                elecciones_primera_vuelta.save()
+
+                elecciones_segunda_vuelta=Elecciones.objects.create(
+                    periodo=elecciones_primera_vuelta.periodo,
+                    tipo=2
+                )
+
+                urnas_primera_vuelta=Urna.objects.filter(elecciones=elecciones_primera_vuelta)
+
+                crear_urnas_segunda_vuelta(elecciones_segunda_vuelta, urnas_primera_vuelta)
+
+                transaction.set_rollback(True)
+
+            messages.success(self.request, 'Segunda vuelta creada correctamente.')
+
+        except Exception as e:
+            form.add_error(None, f'Ocurrió un error al crear la segunda vuelta de elecciones. {e}')
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
 
 

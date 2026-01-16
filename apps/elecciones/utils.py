@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User  
 from django.utils.crypto import get_random_string
 from apps.usuarios.models import Persona, Permiso, Permiso_Usuario, Area
-from .models import Voto
+from .models import Voto, Urna
 
 def crear_usuario_permiso_persona_urna(urna):
 
@@ -61,6 +61,50 @@ def crear_votos_urna(urna, persona):
             urna=urna,
             persona=v
         )
+
+def crear_urnas_segunda_vuelta(segunda_vuelta, urnas):
+
+    for u in urnas:
+
+        nueva_urna = Urna.objects.create(
+            elecciones=segunda_vuelta,
+            area=u.area,
+            genero=u.genero,
+        )
+
+        user, password_nueva, persona = crear_usuario_permiso_persona_urna(nueva_urna)
+
+        nueva_urna.usuario = user
+
+        nueva_urna.usuario.password = u.usuario.password
+
+        nueva_urna.save()
+
+        print("===========================================================================")
+        print(f"Se creó la urna: Urna.{nueva_urna.area.nombre}.{nueva_urna.genero}.{nueva_urna.elecciones.periodo.anio}.P{nueva_urna.elecciones.periodo.periodo}.V{nueva_urna.elecciones.tipo}")
+        
+        votos_completos = u.votos_urna.filter(completo=True)
+
+        crear_votos_urna_segunda_vuelta(nueva_urna, votos_completos)
+
+
+def crear_votos_urna_segunda_vuelta(nueva_urna, votos_completos):
+
+    print(f"Votos para segunda vuelta:{votos_completos.count()}")
+    print("Padrón de segunda vuelta:")
+
+    for v in votos_completos: 
+
+        mismo_votante=v.persona
+
+        print(v.persona)
+
+        Voto.objects.create(
+            urna=nueva_urna,
+            persona=mismo_votante
+        )
+
+
 
 
 

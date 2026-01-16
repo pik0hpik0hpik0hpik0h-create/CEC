@@ -179,7 +179,7 @@ class form_votar(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs) 
 
         elecciones_activas = Elecciones.objects.filter(activas=True).first()
 
@@ -191,3 +191,23 @@ class form_votar(forms.ModelForm):
             self.fields['voto_jefe'].queryset = candidatos.filter(tipo='JCM')
             self.fields['voto_jefa'].queryset = candidatos.filter(tipo='JCF')
             self.fields['voto_materiales'].queryset = candidatos.filter(tipo='JM')
+
+# VER RESULTADOS
+class form_crear_segunda_vuelta(forms.Form):
+    
+    #ELECCIONES
+    elecciones = forms.ModelChoiceField(
+        queryset=Elecciones.objects.none(),
+        empty_label=None,
+        error_messages={
+            'required': 'Por favor, seleccione unas elecciones.',
+        },
+        widget=forms.Select(attrs={
+            'class': 'custom-select bg-neutral-content rounded-lg text-xs font-montserrat font-medium select form-accent mt-2 border-0 focus:outline-none focus:ring-1 focus:ring-accent/50',
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['elecciones'].queryset = Elecciones.objects.filter(tipo='1')
+        self.fields['elecciones'].initial = Elecciones.objects.filter(tipo='1', activas=True).first()
