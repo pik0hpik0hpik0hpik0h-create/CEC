@@ -2,11 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User  
 from cloudinary.models import CloudinaryField
 
-class Area(models.Model):
+class Area(models.Model): 
     nombre = models.CharField(max_length=255)
 
     def __str__(self):
         return self.nombre
+    
+    class Meta:
+        verbose_name_plural = "Áreas"
+        verbose_name = "Área"
 
 class Persona(models.Model):
 
@@ -26,16 +30,33 @@ class Persona(models.Model):
     clave_temporal = models.BooleanField(default=True)
 
     def __str__(self):
-
         return f"{self.nombre} {self.apellido}"
+    
+    class Meta:
+        verbose_name_plural = "Personas"
+        verbose_name = "Persona"
 
 class Permiso(models.Model): 
     nombre = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
 
+    def __str__(self):
+        return f"{self.nombre}"
+    
+    class Meta:
+        verbose_name_plural = "Permisos"
+        verbose_name = "Permiso"
+
 class Permiso_Usuario(models.Model):
     permiso = models.ForeignKey(Permiso, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='permisos')
+
+    def __str__(self):
+        return f"{self.usuario.username} es {self.permiso}"
+    
+    class Meta:
+        verbose_name_plural = "Permisos por usuarios"
+        verbose_name = "Permiso de usuario"
 
 
     

@@ -21,6 +21,10 @@ class Periodo(models.Model):
 
     def __str__(self):
         return f'{self.anio} - {self.get_periodo_display()}'
+    
+    class Meta:
+        verbose_name_plural = "Periodos"
+        verbose_name = "Periodo"
 
 class Elecciones(models.Model):
  
@@ -42,6 +46,10 @@ class Elecciones(models.Model):
     def __str__(self):
         return f'{self.periodo} | {"Primera Vuelta" if self.tipo == "1" else "Segunda Vuelta"}'
 
+    class Meta:
+        verbose_name_plural = "Elecciones"
+        verbose_name = "Elección"
+
 
 class Urna(models.Model):
 
@@ -56,6 +64,13 @@ class Urna(models.Model):
     genero = models.CharField(max_length=1, choices=GENERO)
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='urna_usuario')
 
+    def __str__(self):
+        return f"{self.usuario.username}"
+    
+    class Meta:
+        verbose_name_plural = "Urnas"
+        verbose_name = "Urna"
+
 
 class Candidato(models.Model):
 
@@ -69,14 +84,35 @@ class Candidato(models.Model):
     elecciones = models.ForeignKey(Elecciones, on_delete=models.CASCADE, null=True, blank=True, related_name='candidato_elecciones')
     tipo = models.CharField(max_length=3, choices=TIPO)
 
-class Voto(models.Model):
+    def __str__(self):
+        return f"{self.persona} fue candidato a {self.get_tipo_display()} en las {self.elecciones}"
+    
+    class Meta:
+        verbose_name_plural = "Candidatos"
+        verbose_name = "Candidato"
+
+class Voto(models.Model): 
     urna = models.ForeignKey(Urna, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_urna')
     persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_persona')
     permitido = models.BooleanField(default=False)
     completo = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.persona} {"votó" if self.completo else "votará"} en la urna {self.urna.usuario.username}"
+    
+    class Meta:
+        verbose_name_plural = "Votos"
+        verbose_name = "Voto"
+
 class Sufragio(models.Model):
     elecciones = models.ForeignKey(Elecciones, on_delete=models.CASCADE, null=True, blank=True, related_name='sufragio_elecciones')
-    voto_jefe = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefe')
-    voto_jefa = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefa')
-    voto_materiales = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_materiales')
+    voto_jefe = models.ForeignKey(Candidato, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_jefe')
+    voto_jefa = models.ForeignKey(Candidato, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_jefa')
+    voto_materiales = models.ForeignKey(Candidato, on_delete=models.CASCADE, null=True, blank=True, related_name='votos_materiales')
+
+    def __str__(self):
+        return f"Voto #{self.id} en {self.elecciones}"
+    
+    class Meta:
+        verbose_name_plural = "Sufragios"
+        verbose_name = "Sufragio"
