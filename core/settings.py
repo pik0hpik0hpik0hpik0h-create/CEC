@@ -22,7 +22,7 @@ env.read_env(os.path.join(BASE_DIR, '.env'))
 
 ENVIRONMENT = env('ENVIRONMENT', default="production").strip()
 
-#ENVIRONMENT = 'production'
+ENVIRONMENT = 'production'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -169,6 +169,38 @@ CSRF_COOKIE_HTTPONLY = True
 #SESSION_COOKIE_AGE = 15 * 60 
 #SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-
 print("ENVIRONMENT:", ENVIRONMENT)
 print("DEBUG:", DEBUG)
+
+
+
+ADMINS = [
+    ('Admin', 'pik0hpik0hpik0hpik0h@gmail.com'),
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'pik0hpik0hpik0hpik0h@gmail.com'
+EMAIL_HOST_PASSWORD = 'epxdqlgmsqieiakp'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

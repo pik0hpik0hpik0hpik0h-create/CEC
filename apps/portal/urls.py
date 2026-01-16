@@ -7,4 +7,5 @@ urlpatterns = [
     path("ingreso/", login_view.as_view(), name="login"),
     path("dashboard/", views.dashboard, name="dashboard"),  
     path("nueva_clave/", ingresar_nueva_clave, name="ingresar_nueva_clave"), 
+    path("test_error/", views.test_error, name="test_error"), 
 ]

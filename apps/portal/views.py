@@ -9,3 +9,6 @@ def inicio(request):
 def dashboard(request):
 
     return render(request, "dashboard.html")
+
+def test_error(request):
+    1 / 0
