@@ -71,7 +71,7 @@
             <div class="flex flex-col items-center justify-center mb-5">
 
                 <h1 class="font-montserrat text-center text-xl font-extrabold mt-6 text-accent">{{ elecciones }}</h1>
-                <h1 class="font-montserrat text-center text-lg mt-6">Votantes: {{ votantes }}</h1>
+                <h1 class="font-montserrat text-center text-lg mt-6">Empadronados: {{ empadronados }}</h1>
                 <h1 class="font-montserrat text-center text-lg mt-6">Sufragios: {{ sufragios }}</h1>
 
                 <h1 class="font-montserrat text-center font-semibold mt-6">Jefe de Campamento</h1>
@@ -88,6 +88,15 @@
                         <div><p class="text-xs mb-5">Votos: {{ jcm.votos }}</p></div>
                     </div>
                     {% endfor %}
+                    <div class="w-80 h-auto mt-5 bg-base-100 rounded-lg p-3 flex flex-col justify-center items-center">
+                        <div class="avatar">
+                            <div class="w-15 rounded-full mr-2 ring-accent ring-2 mt-5">
+                                <img src="https://res.cloudinary.com/danc3cnzs/image/upload/DEFAULT_PROFILE_PIC_aszqw2.png" />
+                            </div>
+                        </div>
+                        <div><p class="my-5 text-sm">Nulos</p></div>
+                        <div><p class="text-xs mb-5">Votos: {{ nulos_jefe }}</p></div>
+                    </div>
                 {% endif %}
 
                 <h1 class="font-montserrat text-center font-semibold mt-6">Jefa de Campamento</h1>
@@ -104,6 +113,15 @@
                         <div><p class="text-xs mb-5">Votos: {{ jcf.votos }}</p></div>
                     </div>
                     {% endfor %}
+                    <div class="w-80 h-auto mt-5 bg-base-100 rounded-lg p-3 flex flex-col justify-center items-center">
+                        <div class="avatar">
+                            <div class="w-15 rounded-full mr-2 ring-accent ring-2 mt-5">
+                                <img src="https://res.cloudinary.com/danc3cnzs/image/upload/DEFAULT_PROFILE_PIC_aszqw2.png" />
+                            </div>
+                        </div>
+                        <div><p class="my-5 text-sm">Nulos</p></div>
+                        <div><p class="text-xs mb-5">Votos: {{ nulos_jefa }}</p></div>
+                    </div>
                 {% endif %}
 
                 <h1 class="font-montserrat text-center font-semibold mt-6">Jefe de Materiales</h1>
@@ -120,6 +138,15 @@
                         <div><p class="text-xs mb-5">Votos: {{ jm.votos }}</p></div>
                     </div>
                     {% endfor %}
+                    <div class="w-80 h-auto mt-5 bg-base-100 rounded-lg p-3 flex flex-col justify-center items-center">
+                        <div class="avatar">
+                            <div class="w-15 rounded-full mr-2 ring-accent ring-2 mt-5">
+                                <img src="https://res.cloudinary.com/danc3cnzs/image/upload/DEFAULT_PROFILE_PIC_aszqw2.png" />
+                            </div>
+                        </div>
+                        <div><p class="my-5 text-sm">Nulos</p></div>
+                        <div><p class="text-xs mb-5">Votos: {{ nulos_mats }}</p></div>
+                    </div>
                 {% endif %}
             
             </div>

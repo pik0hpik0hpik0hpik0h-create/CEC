@@ -51,7 +51,7 @@ class Urna(models.Model):
         ('F', 'Femenino'),
     ] 
 
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='urnas_elecciones')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.CASCADE, null=True, blank=True, related_name='urnas_elecciones')
     area = models.ForeignKey(Area, on_delete=models.PROTECT, null=True, blank=True, related_name='urnas_area')
     genero = models.CharField(max_length=1, choices=GENERO)
     usuario = models.OneToOneField(User, on_delete=models.PROTECT, null=True, blank=True, related_name='urna_usuario')
@@ -65,8 +65,8 @@ class Candidato(models.Model):
         ('JM', 'Jefe(a) de Materiales'),
     ] 
 
-    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_persona')
-    elecciones = models.ForeignKey(Elecciones, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_materiales_elecciones')
+    persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='candidato_persona')
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.CASCADE, null=True, blank=True, related_name='candidato_elecciones')
     tipo = models.CharField(max_length=3, choices=TIPO)
 
 class Voto(models.Model):
@@ -74,15 +74,9 @@ class Voto(models.Model):
     persona = models.ForeignKey(Persona, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_persona')
     permitido = models.BooleanField(default=False)
     completo = models.BooleanField(default=False)
+
+class Sufragio(models.Model):
+    elecciones = models.ForeignKey(Elecciones, on_delete=models.CASCADE, null=True, blank=True, related_name='sufragio_elecciones')
     voto_jefe = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefe')
     voto_jefa = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_jefa')
     voto_materiales = models.ForeignKey(Candidato, on_delete=models.PROTECT, null=True, blank=True, related_name='votos_materiales')
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['urna', 'persona'], 
-                name='voto_unico_por_persona_y_urna'
-            )
-        ]
-

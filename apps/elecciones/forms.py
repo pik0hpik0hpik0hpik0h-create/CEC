@@ -149,11 +149,7 @@ class form_votar(forms.ModelForm):
 
     class Meta:
         model = Voto
-        fields = [
-            'voto_jefe',
-            'voto_jefa',
-            'voto_materiales',
-        ]
+        fields = []
 
     voto_jefe = forms.ModelChoiceField(
         queryset=Candidato.objects.none(),

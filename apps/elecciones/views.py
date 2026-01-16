@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
 from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados, form_votar
-from .models import Periodo, Elecciones, Urna, Candidato, Voto
+from .models import Periodo, Elecciones, Urna, Candidato, Voto, Sufragio
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna
 
 @login_required
@@ -180,33 +180,43 @@ def reporte_elecciones(request, elecciones_id):
 
     elecciones = get_object_or_404(Elecciones, id=elecciones_id)
 
-    votantes = Voto.objects.filter(urna__elecciones=elecciones).count()
+    empadronados = Voto.objects.filter(urna__elecciones=elecciones).count()
 
-    sufragios = Voto.objects.filter(completo=True).count()
+    sufragios = Sufragio.objects.filter(elecciones=elecciones).count()
 
     candidatos_jefe = Candidato.objects.filter(elecciones=elecciones, tipo='JCM')
 
     for jcm in candidatos_jefe:
-        jcm.votos = Voto.objects.filter(voto_jefe=jcm, urna__elecciones=elecciones).count()
+        jcm.votos = Sufragio.objects.filter(voto_jefe=jcm, elecciones=elecciones).count()
+
+    nulos_jefe = Sufragio.objects.filter(voto_jefe=None).count()
 
     candidatas_jefa = Candidato.objects.filter(elecciones=elecciones, tipo='JCF')
 
     for jcf in candidatas_jefa:
-        jcf.votos = Voto.objects.filter(voto_jefa=jcf, urna__elecciones=elecciones).count()
+        jcf.votos = Sufragio.objects.filter(voto_jefa=jcf, elecciones=elecciones).count()
+    
+    nulos_jefa = Sufragio.objects.filter(voto_jefa=None).count()
 
     candidatos_mats = Candidato.objects.filter(elecciones=elecciones, tipo='JM')
 
     for jm in candidatos_mats:
-        jm.votos = Voto.objects.filter(voto_materiales=jm, urna__elecciones=elecciones).count()
+        jm.votos = Sufragio.objects.filter(voto_materiales=jm, elecciones=elecciones).count()
+
+    nulos_mats = Sufragio.objects.filter(voto_materiales=None).count()
     
     context = {
         'elecciones': elecciones,
-        'votantes': votantes,
+        'empadronados': empadronados,
         'sufragios': sufragios,
 
         'candidatos_jefe': candidatos_jefe,
         'candidatas_jefa': candidatas_jefa,
-        'candidatos_mats': candidatos_mats
+        'candidatos_mats': candidatos_mats,
+
+        'nulos_jefe': nulos_jefe,
+        'nulos_jefa': nulos_jefa,
+        'nulos_mats': nulos_mats,
     }
 
     return render(request, "reporte_elecciones.html", context)
@@ -331,25 +341,50 @@ def votar(request, voto_id):
 
         if form.is_valid():
 
-            voto.completo = True
-            print(f"{voto.persona} registró su voto.")
-            voto.permitido = False
-            print(f"El voto de {voto.persona} ha sido bloqueado.")
+            try:
+                with transaction.atomic():
 
-            voto_jefe=form.cleaned_data['voto_jefe']
-            voto_jefa=form.cleaned_data['voto_jefa']
-            voto_materiales=form.cleaned_data['voto_materiales']
+                    voto.completo = True
+                    print(f"{voto.persona} registró su voto.")
+                    voto.permitido = False
+                    print(f"El voto de {voto.persona} ha sido bloqueado.")
 
-            print("======================================")
-            print(f"{voto_jefe.persona} recibió un voto.")
-            print(f"{voto_jefa.persona} recibió un voto.")
-            print(f"{voto_materiales.persona} recibió un voto.")
-            print("======================================")
+                    nuevo_voto_jefe=form.cleaned_data['voto_jefe']
+                    nuevo_voto_jefa=form.cleaned_data['voto_jefa']
+                    nuevo_voto_materiales=form.cleaned_data['voto_materiales']
 
-            #voto.save()
+                    Sufragio.objects.create(
+                        elecciones=voto.urna.elecciones,
+                        voto_jefe=nuevo_voto_jefe,
+                        voto_jefa=nuevo_voto_jefa,
+                        voto_materiales=nuevo_voto_materiales
+                    )
 
-            messages.success(request, 'Voto registrado correctamente')
-            return redirect('listo_para_votar')
+                    print("======================================")
+                    if nuevo_voto_jefe == None:
+                        print("Voto nulo para jefe de campamento.")
+                    else:
+                        print(f"{nuevo_voto_jefe.persona} recibió un voto.")
+
+                    if nuevo_voto_jefa == None:
+                        print("Voto nulo para jefa de campamento.")
+                    else:
+                        print(f"{nuevo_voto_jefa.persona} recibió un voto.")
+
+                    if nuevo_voto_materiales == None:
+                        print("Voto nulo para jefe de materiales.")
+                    else:
+                        print(f"{nuevo_voto_materiales.persona} recibió un voto." or None)
+                    print("======================================")
+
+                    voto.save()
+                
+                messages.success(request, 'Voto registrado correctamente')
+                return redirect('listo_para_votar')
+            
+            except Exception as e:
+                messages.error(None, f'Ocurrió un error al registrar tu voto. {e}')
+                return redirect('listo_para_votar')
 
     context = {
         'voto': voto,
