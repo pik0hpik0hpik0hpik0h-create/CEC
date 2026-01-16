@@ -41,52 +41,99 @@
 
     <div class="relative min-h-screen flex items-center justify-center">
 
-        <div class="absolute inset-0 bg-[url('/static/img/LOGINBG.png')] bg-cover bg-center opacity-10"></div>
+            <form method="post" novalidate class="relative bg-white/20 rounded-3xl w-auto min-w-80 h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
 
-            <form method="post" novalidate class="relative bg-white/20 rounded-3xl w-auto h-auto border border-accent/50 m-10 p-10 space-y-4 shadow-lg">
+                {% csrf_token %}
 
                 {% if radios_jefe %}
 
-                <label class="font-montserrat text-sm font-light">Jefe de Campamento</label>
+                <label class="font-montserrat text-3xl font-bold text-center text-white block italic">
+                    JEFE DE CAMPAMENTO
+                </label>
 
-                <div class="flex flex-wrap justify-center items-center mx-20 my-10 gap-8">
+                <div class="flex flex-wrap justify-center items-center mx-20 my-10 gap-20 font-montserrat">
 
                     {% for radio, candidato in radios_jefe %}
-                    <label class="cursor-pointer">
+                    <label class="cursor-pointer flex flex-col items-center gap-2">
 
-                        <!-- Radio real -->
                         {{ radio.tag }}
 
-                        <!-- Card -->
-                        <div class="
-                            avatar flex flex-col items-center justify-between w-32 p-3 rounded-2xl
-                            border border-accent/30
-                            transition-all duration-200
-                            hover:scale-105
-                            peer-checked:ring-4 peer-checked:ring-accent
-                            peer-checked:bg-accent/10
-                        ">
-
-                            <div class="ring-accent ring-offset-base-100 w-20 rounded-full ring-2 ring-offset-2">
-                                <img src="{{ candidato.persona.foto.url }}" />
-                            </div>
-
-                            <p title="{{ candidato.persona }}"
-                            class="text-xs mt-3 text-center truncate font-montserrat">
-                                {{ candidato.persona }}
-                            </p>
-
+                        <div class="w-22 h-22 rounded-full flex items-center justify-center transition-all duration-200 peer-checked:ring-4 peer-checked:ring-accent peer-checked:ring-offset-0 hover:scale-105">
+                            <img src="{{ candidato.persona.foto.url }}" class="w-20 h-20 rounded-full object-cover">
                         </div>
+
+                        <p title="{{ candidato.persona }}" class="text-md text-white truncate text-center">
+                            {{ candidato.persona }}
+                        </p>
+
                     </label>
                     {% endfor %}
 
                 </div>
-                {% else %}
-                <p class="font-montserrat text-warning text-sm text-center my-10">
-                    No hay candidatos a jefe de campamento registrados
-                </p>
+
                 {% endif %}
 
+                {% if radios_jefa %}
+
+                <label class="font-montserrat text-3xl font-bold text-center text-white block italic">
+                    JEFA DE CAMPAMENTO
+                </label>
+
+                <div class="flex flex-wrap justify-center items-center mx-20 my-10 gap-20 font-montserrat">
+
+                    {% for radio, candidata in radios_jefa %}
+                    <label class="cursor-pointer flex flex-col items-center gap-2">
+
+                        {{ radio.tag }}
+
+                        <div class="w-22 h-22 rounded-full flex items-center justify-center transition-all duration-200 peer-checked:ring-4 peer-checked:ring-accent peer-checked:ring-offset-0 hover:scale-105">
+                            <img src="{{ candidata.persona.foto.url }}" class="w-20 h-20 rounded-full object-cover">
+                        </div>
+
+                        <p title="{{ candidata.persona }}" class="text-md text-white truncate text-center">
+                            {{ candidata.persona }}
+                        </p>
+
+                    </label>
+                    {% endfor %}
+
+                </div>
+
+                {% endif %}
+
+                {% if radios_mats %}
+
+                <label class="font-montserrat text-3xl font-bold text-center text-white block italic">
+                    JEFE DE MATERIALES
+                </label>
+
+                <div class="flex flex-wrap justify-center items-center mx-20 my-10 gap-20 font-montserrat">
+
+                    {% for radio, candidato in radios_mats %}
+                    <label class="cursor-pointer flex flex-col items-center gap-2">
+
+                        {{ radio.tag }}
+
+                        <div class="w-22 h-22 rounded-full flex items-center justify-center transition-all duration-200 peer-checked:ring-4 peer-checked:ring-accent peer-checked:ring-offset-0 hover:scale-105">
+                            <img src="{{ candidato.persona.foto.url }}" class="w-20 h-20 rounded-full object-cover">
+                        </div>
+
+                        <p title="{{ candidato.persona }}" class="text-md text-white truncate text-center">
+                            {{ candidato.persona }}
+                        </p>
+
+                    </label>
+                    {% endfor %}
+
+                </div>
+
+                {% endif %}
+
+                <div class="flex flex-wrap">
+                    <button type="reset" class="font-montserrat btn btn-xl w-full mt-10 rounded-lg border-0 items-center bg-red-950 text-red-100 hover:bg-red-900 active:bg-red-800">Reiniciar</button>
+                    <button type="submit" class="font-montserrat btn btn-xl w-full mt-3 rounded-lg border-0 items-center bg-green-950 text-green-100 hover:bg-green-900 active:bg-green-800">Votar</button>
+                </div>
+                
             </form>
 
     </div>

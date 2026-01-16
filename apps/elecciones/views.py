@@ -265,7 +265,7 @@ def voto_permitido_actual(request):
         messages.error(request, 'Aún no se ha autorizado ningún voto en esta urna.')
         return redirect('listo_para_votar')
     else:
-        print(voto_permitido_actual.id)
+        print(f"El ID del voto permitido actual en la urna {urna.usuario.username} es: {voto_permitido_actual.id}")
         return redirect('votar', voto_id=voto_permitido_actual.id)
     
 # LISTO PARA VOTAR?
@@ -286,18 +286,18 @@ def votar(request, voto_id):
 
     voto = get_object_or_404(Voto, id=voto_id)
 
-    print(voto.urna.usuario)
-    print(user)
-
     if voto.urna.usuario != user:
+        print(f"Este voto corresponde a la {voto.urna.usuario} pero {user} intentó acceder.")
         messages.error(request, 'Este voto no corresponde a esta urna.')
         return redirect('listo_para_votar')
 
     if voto.completo:
+        print(f"{voto.persona} intentó registrar su voto otra vez.")
         messages.error(request, f'{voto.persona} ya votó.')
         return redirect('listo_para_votar')
 
     if not voto.permitido:
+        print(f"{voto.persona} intentó votar aunque no estuviese autorizado.")
         messages.error(request, f'{voto.persona} aún no puede votar.')
         return redirect('listo_para_votar')
     
@@ -311,12 +311,13 @@ def votar(request, voto_id):
 
     radios_jefe = zip(form['voto_jefe'], candidatos_jefe)
 
-
     candidatas_jefa = Candidato.objects.filter(elecciones=elecciones, tipo='JCF').select_related('persona').only(
         'persona__nombre',
         'persona__apellido',
         'persona__foto',
     )
+
+    radios_jefa = zip(form['voto_jefa'], candidatas_jefa)
 
     candidatos_mats = Candidato.objects.filter(elecciones=elecciones, tipo='JM').select_related('persona').only(
         'persona__nombre',
@@ -324,15 +325,28 @@ def votar(request, voto_id):
         'persona__foto',
     )
 
+    radios_mats = zip(form['voto_materiales'], candidatos_mats)
+
     if request.method == 'POST':
 
         if form.is_valid():
 
-            voto = form.save(commit=False)  
-
             voto.completo = True
+            print(f"{voto.persona} registró su voto.")
             voto.permitido = False
-            voto.save()
+            print(f"El voto de {voto.persona} ha sido bloqueado.")
+
+            voto_jefe=form.cleaned_data['voto_jefe']
+            voto_jefa=form.cleaned_data['voto_jefa']
+            voto_materiales=form.cleaned_data['voto_materiales']
+
+            print("======================================")
+            print(f"{voto_jefe.persona} recibió un voto.")
+            print(f"{voto_jefa.persona} recibió un voto.")
+            print(f"{voto_materiales.persona} recibió un voto.")
+            print("======================================")
+
+            #voto.save()
 
             messages.success(request, 'Voto registrado correctamente')
             return redirect('listo_para_votar')
@@ -340,8 +354,8 @@ def votar(request, voto_id):
     context = {
         'voto': voto,
         'radios_jefe': radios_jefe,
-        'candidatas_jefa': candidatas_jefa,
-        'candidatos_mats': candidatos_mats,
+        'radios_jefa': radios_jefa,
+        'radios_mats': radios_mats,
         'form': form
     }
 
