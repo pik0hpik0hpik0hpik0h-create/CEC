@@ -78,6 +78,7 @@ def crear_urnas_segunda_vuelta(segunda_vuelta, urnas):
 
         nueva_urna.usuario.password = u.usuario.password
 
+        user.save()
         nueva_urna.save()
 
         print("===========================================================================")

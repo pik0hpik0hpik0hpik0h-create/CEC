@@ -428,7 +428,7 @@ class crear_segunda_vuelta(LoginRequiredMixin,FormView):
 
                 crear_urnas_segunda_vuelta(elecciones_segunda_vuelta, urnas_primera_vuelta)
 
-                transaction.set_rollback(True)
+                #transaction.set_rollback(True)
 
             messages.success(self.request, 'Segunda vuelta creada correctamente.')
 
