@@ -16,4 +16,6 @@ urlpatterns = [
     path("listo/", views.listo_para_votar, name="listo_para_votar"),
     path("votar/<int:voto_id>/", views.votar, name="votar"),
     path("crear/segunda_vuelta", views.crear_segunda_vuelta.as_view(), name="crear_segunda_vuelta"),
+    path("elecciones_actuales/", views.elecciones_actuales, name="elecciones_actuales"),
+    path("tarjeta/<int:elecciones_id>/", views.tarjeta_elecciones, name="tarjeta_elecciones"),
 ]

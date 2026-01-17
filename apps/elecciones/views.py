@@ -437,5 +437,38 @@ class crear_segunda_vuelta(LoginRequiredMixin,FormView):
             return self.form_invalid(form)
 
         return super().form_valid(form)
+    
+# ELECCIONES ACTUALES
+@login_required
+@permiso_required('admin', 'elecciones')
+def elecciones_actuales(request):
+
+    elecciones_actuales=Elecciones.objects.filter(activas=True).first()
+
+    if not elecciones_actuales:
+        messages.error(request, 'Aún no hay ningunas elecciones activas.')
+        return redirect('crear_primera_vuelta')
+    else:
+        return redirect('tarjeta_elecciones', elecciones_id=elecciones_actuales.id)
+    
+# TARJETA DE DATOS DE PERSONA
+@login_required
+@permiso_required('admin', 'elecciones')
+def tarjeta_elecciones(request, elecciones_id):
+
+    eleccion = get_object_or_404(Elecciones, id=elecciones_id)
+    urnas = Urna.objects.filter(elecciones=eleccion)
+    empadronados = Voto.objects.filter(urna__elecciones=eleccion).count()
+
+    for u in urnas:
+        u.empadronados=Voto.objects.filter(urna=u).count()
+
+    context = {
+        'elecciones': eleccion,
+        'urnas': urnas,
+        'empadronados': empadronados,
+    }
+
+    return render(request, "tarjeta_elecciones.html", context)
 
 
