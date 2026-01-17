@@ -100,7 +100,7 @@
                                                 <span class="font-semibold">Área:</span> {{ c.persona.area }}
                                             </p>
                                             <p class="text-sm">
-                                                <span class="font-semibold">Elecciones:</span> {% if c.urna.elecciones.tipo == 1 %}Primera vuelta{% elif c.urna.elecciones.tipo == 2 %}Segunda vuelta{% else %}—{% endif %}
+                                                <span class="font-semibold">Elecciones:</span> {% if c.urna.elecciones.tipo == "1" %}Primera vuelta{% elif c.urna.elecciones.tipo == "2" %}Segunda vuelta{% else %}—{% endif %}
                                             </p>
                                         </div>
 
