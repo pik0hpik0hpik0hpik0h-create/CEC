@@ -120,6 +120,13 @@ class Sufragio(models.Model):
 class Se_Puede_Votar(models.Model):
     permitido = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"{'Se puede votar' if self.permitido else 'No se puede votar'}"
+    
+    class Meta:
+        verbose_name_plural = "Se Puede Votar"
+        verbose_name = "Se Puede Votar"
+
     def save(self, *args, **kwargs):
         self.pk = 1  
         super().save(*args, **kwargs)
