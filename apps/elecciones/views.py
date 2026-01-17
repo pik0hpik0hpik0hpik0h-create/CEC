@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from apps.usuarios.decorators import permiso_required, permiso_required_cbv, permiso_excluido, permiso_excluido_cbv
 from .forms import form_crear_primera_vuelta, form_crear_urna, form_registrar_candidato, form_consultar_resultados, form_votar, form_crear_segunda_vuelta
-from .models import Periodo, Elecciones, Urna, Candidato, Voto, Sufragio
+from .models import Periodo, Elecciones, Urna, Candidato, Voto, Sufragio, Se_Puede_Votar
 from .utils import crear_usuario_permiso_persona_urna, crear_votos_urna, crear_urnas_segunda_vuelta
 
 @login_required
@@ -226,6 +226,12 @@ def reporte_elecciones(request, elecciones_id):
 @permiso_required('urna')
 def autorizar_voto(request):
 
+    se_puede, created = Se_Puede_Votar.objects.get_or_create(pk=1)
+
+    if not se_puede.permitido:
+        messages.error(request, 'Aún no se puede votar.')
+        return redirect('dashboard_elecciones')
+
     urna = request.user.urna_usuario
 
     votos = urna.votos_urna.select_related('persona').only(
@@ -250,6 +256,12 @@ def autorizar_voto(request):
 @permiso_required('urna')
 def permitir_voto(request, voto_id):
 
+    se_puede, created = Se_Puede_Votar.objects.get_or_create(pk=1)
+
+    if not se_puede.permitido:
+        messages.error(request, 'Aún no se puede votar.')
+        return redirect('dashboard_elecciones')
+
     urna = request.user.urna_usuario
     votos = urna.votos_urna.all()
     
@@ -268,6 +280,12 @@ def permitir_voto(request, voto_id):
 @permiso_required('urna')
 def voto_permitido_actual(request):
 
+    se_puede, created = Se_Puede_Votar.objects.get_or_create(pk=1)
+
+    if not se_puede.permitido:
+        messages.error(request, 'Aún no se puede votar.')
+        return redirect('dashboard_elecciones')
+
     urna = request.user.urna_usuario
     voto_permitido_actual = urna.votos_urna.filter(permitido=True).first()
 
@@ -283,12 +301,24 @@ def voto_permitido_actual(request):
 @permiso_required('urna')
 def listo_para_votar(request):
 
+    se_puede, created = Se_Puede_Votar.objects.get_or_create(pk=1)
+
+    if not se_puede.permitido:
+        messages.error(request, 'Aún no se puede votar.')
+        return redirect('dashboard_elecciones')
+
     return render(request, 'listo_para_votar.html')
 
 # VOTAR
 @login_required
 @permiso_required('urna')
 def votar(request, voto_id):
+
+    se_puede, created = Se_Puede_Votar.objects.get_or_create(pk=1)
+
+    if not se_puede.permitido:
+        messages.error(request, 'Aún no se puede votar.')
+        return redirect('dashboard_elecciones')
 
     form = form_votar(data=request.POST or None)
 
@@ -470,5 +500,24 @@ def tarjeta_elecciones(request, elecciones_id):
     }
 
     return render(request, "tarjeta_elecciones.html", context)
+
+# MIS CERTIFICADOS
+@login_required
+@permiso_excluido('urna', 'admin')
+def mis_certificados(request):
+
+    usuario = request.user
+
+    certificados = Voto.objects.filter(persona__usuario=usuario, completo=True)
+
+    if not certificados:
+        messages.error(request, 'Aún no tienes ningún certificado.')
+        return redirect('dashboard_elecciones')
+
+    context = {
+        'certificados': certificados
+    }
+
+    return render(request, "mis_certificados.html", context)
 
 

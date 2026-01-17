@@ -112,4 +112,25 @@
     @keyframes main {
       25% {--10-x-position: 15%;--10-y-position: 15%;--13-x-position: 85%;--13-y-position: 80%;}50% {--10-x-position: 80%;--10-y-position: 15%;--11-x-position: 20%;--11-y-position: 20%;--12-x-position: 20%;--12-y-position: 20%;--13-x-position: 15%;--13-y-position: 85%;}
     }
+
+.bg-animado-votar {background: radial-gradient(100% 100% at var(--12-x-position) var(--12-y-position), #af1818 26%, transparent),radial-gradient(100% 100% at var(--13-x-position) var(--13-y-position), #ffec70 25%, transparent),#e05a00;animation-name: main; animation-iteration-count: infinite; animation-duration: 20s; transition-timing-function: ease-in;}@property --12-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 20%;
+      }@property --12-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 80%;
+        }@property --13-x-position {
+      syntax: '<percentage>';
+        inherits: false;
+        initial-value: 80%;
+      }@property --13-y-position {
+        syntax: '<percentage>';
+          inherits: false;
+          initial-value: 80%;
+        }:root {--7-x-position: 20%;--7-y-position: 80%;--8-x-position: 80%;--8-y-position: 80%;--12-x-position: 20%;--12-y-position: 80%;--13-x-position: 80%;--13-y-position: 80%;}
+    @keyframes main {
+      25% {--12-x-position: 15%;--12-y-position: 15%;}50% {--12-x-position: 80%;--12-y-position: 15%;--13-x-position: 20%;--13-y-position: 20%;}
+    }
     

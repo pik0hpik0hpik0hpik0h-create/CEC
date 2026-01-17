@@ -22,7 +22,7 @@ env.read_env(os.path.join(BASE_DIR, '.env'))
 
 ENVIRONMENT = env('ENVIRONMENT', default="production").strip()
 
-#ENVIRONMENT = 'production'
+ENVIRONMENT = 'production'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
