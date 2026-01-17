@@ -189,21 +189,21 @@ def reporte_elecciones(request, elecciones_id):
     for jcm in candidatos_jefe:
         jcm.votos = Sufragio.objects.filter(voto_jefe=jcm, elecciones=elecciones).count()
 
-    nulos_jefe = Sufragio.objects.filter(voto_jefe=None).count()
+    nulos_jefe = Sufragio.objects.filter(voto_jefe=None, elecciones=elecciones).count()
 
     candidatas_jefa = Candidato.objects.filter(elecciones=elecciones, tipo='JCF')
 
     for jcf in candidatas_jefa:
         jcf.votos = Sufragio.objects.filter(voto_jefa=jcf, elecciones=elecciones).count()
     
-    nulos_jefa = Sufragio.objects.filter(voto_jefa=None).count()
+    nulos_jefa = Sufragio.objects.filter(voto_jefa=None, elecciones=elecciones).count()
 
     candidatos_mats = Candidato.objects.filter(elecciones=elecciones, tipo='JM')
 
     for jm in candidatos_mats:
         jm.votos = Sufragio.objects.filter(voto_materiales=jm, elecciones=elecciones).count()
 
-    nulos_mats = Sufragio.objects.filter(voto_materiales=None).count()
+    nulos_mats = Sufragio.objects.filter(voto_materiales=None, elecciones=elecciones).count()
     
     context = {
         'elecciones': elecciones,

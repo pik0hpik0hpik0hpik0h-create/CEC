@@ -95,7 +95,7 @@ class form_registrar_candidato(forms.Form):
 
     #PERSONA
     persona = forms.ModelMultipleChoiceField(
-        queryset=Persona.objects.filter(area__nombre__in=['Roja', 'Amarilla']).exclude(cedula=None),
+        queryset=Persona.objects.filter(area__nombre__in=['Roja', 'Amarilla']).exclude(cedula=None).order_by('nombre'),
         required=True,
 
         error_messages={
